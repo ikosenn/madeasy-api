@@ -23,6 +23,7 @@ setup(
         'django-oauth-toolkit==0.10.0',
         'psycopg2==2.6.1',
         'djangorestframework==3.3.2',
+        'django-cors-headers==1.1.0',
         'gunicorn==19.4.5',
         'oauthlib==1.0.3',
         'click==6.2',
