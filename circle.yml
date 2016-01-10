@@ -1,0 +1,13 @@
+dependencies:
+  pre:
+    - sudo apt-get install python3-all-dev
+ 
+test:
+  override:
+    - run test:
+        environment:
+            DATABASE_URL: postgres://ubuntu@localhost:5432/circle_test
+
+general:
+  artifacts:
+    - "coverage/"

@@ -50,7 +50,7 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'madeasy.urls'
+ROOT_URLCONF = 'madeasy.config.urls'
 
 TEMPLATES = [
     {
@@ -68,7 +68,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'madeasy.wsgi.application'
+WSGI_APPLICATION = 'madeasy.config.wsgi.application'
 
 
 # Database
