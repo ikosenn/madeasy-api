@@ -31,6 +31,7 @@ setup(
     ],
     scripts=[
         'bin/madeasy_manage',
+        'bin/run'
     ],
     include_package_data=True
 )

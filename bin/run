@@ -3,7 +3,7 @@ import os
 import sys
 import click
 
-from emrapp.config import settings
+from madeasy.config import settings
 from sarge import run
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -83,15 +83,6 @@ def reset(*args, **kwargs):
     _manage('migrate')
 
 
-@click.command()
-def load():
-    """
-    Loads the demo data during development
-    """
-    data_files = os.path.join(BASE_DIR, 'madeasy/data/*/*.json')
-    _manage('bootstrap', data_files)
-
-
 @click.group(chain=True, invoke_without_command=True)
 @click.pass_context
 def setup(ctx):
@@ -99,7 +90,6 @@ def setup(ctx):
     Delete the development database, recreate it, load data
     """
     ctx.invoke(reset)
-    ctx.invoke(load)
 
 
 @click.command()
@@ -122,7 +112,6 @@ def cli():
 
 cli.add_command(test)
 cli.add_command(test_with_clean_db)
-cli.add_command(load)
 cli.add_command(reset)
 cli.add_command(setup)
 cli.add_command(server)
