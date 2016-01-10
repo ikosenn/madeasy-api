@@ -79,7 +79,7 @@ class UserProfile(models.Model):
     country = models.CharField(max_length=255)
 
 
-class EmrOauthApplication(AbstractApplication):
+class OauthApplication(AbstractApplication):
     """
     Oauth aplication table
     Create an end point for registered OAUTH applications

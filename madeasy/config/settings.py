@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'oauth2_provider',
+    'rest_framework',
+    'rest_auth',
     'madeasy.madeasy_auth',
     'madeasy.airline',
     'madeasy.booking'
@@ -134,7 +136,7 @@ REST_FRAMEWORK = {
     'TIME_FORMAT': 'iso-8601',
 }
 
-OAUTH2_PROVIDER_APPLICATION_MODEL = 'madeasy.EmrOauthApplication'
+OAUTH2_PROVIDER_APPLICATION_MODEL = 'madeasy.OauthApplication'
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
