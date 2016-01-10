@@ -68,6 +68,17 @@ class User(AbstractBaseUser):
     REQUIRED_FIELDS = ['first_name', 'last_name']
 
 
+class UserProfile(models.Model):
+    """
+    Contains more details about a user
+    """
+
+    phone_number = models.CharField(max_length=50)
+    address = models.CharField(max_length=255, null=True)
+    city = models.CharField(max_length=255, null=True)
+    country = models.CharField(max_length=255)
+
+
 class EmrOauthApplication(AbstractApplication):
     """
     Oauth aplication table
