@@ -2,7 +2,7 @@ from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
 from django.db import models
-from oauth2_provider.models import AbstractApplication
+# from oauth2_provider.models import AbstractApplication
 
 
 class UserManager(BaseUserManager):
@@ -79,13 +79,13 @@ class UserProfile(models.Model):
     country = models.CharField(max_length=255)
 
 
-class OauthApplication(AbstractApplication):
-    """
-    Oauth aplication table
-    Create an end point for registered OAUTH applications
-    """
-    def __str__(self):
-        return self.name or self.client_id
-
-    class Meta(object):
-        verbose_name = 'madeasy oauth application'
+# class OauthApplication(AbstractApplication):
+#     """
+#     Oauth aplication table
+#     Create an end point for registered OAUTH applications
+#     """
+#     def __str__(self):
+#         return self.name or self.client_id
+#
+#     class Meta(object):
+#         verbose_name = 'madeasy oauth application'

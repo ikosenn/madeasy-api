@@ -4,7 +4,7 @@ from rest_framework import serializers
 from .models import (
     User,
     UserProfile,
-    EmrOauthApplication,
+    OauthApplication,
 )
 
 class UserSerializer(serializers.ModelSerializer):

@@ -39,8 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'oauth2_provider',
+    'corsheaders',
     'rest_framework',
-    'rest_auth',
+    # 'rest_auth',
     'madeasy.madeasy_auth',
     'madeasy.airline',
     'madeasy.booking'
@@ -136,7 +137,7 @@ REST_FRAMEWORK = {
     'TIME_FORMAT': 'iso-8601',
 }
 
-OAUTH2_PROVIDER_APPLICATION_MODEL = 'madeasy.OauthApplication'
+# OAUTH2_PROVIDER_APPLICATION_MODEL = 'madeasy_auth.OauthApplication'
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
@@ -150,7 +151,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-AUTH_USER_MODEL = 'madeasy.User'
+AUTH_USER_MODEL = 'madeasy_auth.User'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/

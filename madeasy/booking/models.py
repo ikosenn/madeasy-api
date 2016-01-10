@@ -3,7 +3,7 @@ from django.conf import settings
 
 from madeasy.airline.models import (
     TravelClass,
-    Flight
+    Flight,
 )
 
 
