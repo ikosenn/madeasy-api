@@ -19,4 +19,10 @@ from django.conf.urls import include, url
 urlpatterns = [
     url(r'^o/',
         include('oauth2_provider.urls', namespace='oauth2_provider')),
+    url(r'^auth/',
+        include('madeasy.madeasy_auth.urls', namespace='auth')),
+    url(r'^booking/',
+        include('madeasy.booking.urls', namespace='booking')),
+    url(r'^airline/',
+        include('madeasy.airline.urls', namespace='airline')),
 ]

@@ -7,6 +7,7 @@ from .models import (
     OauthApplication,
 )
 
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User

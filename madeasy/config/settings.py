@@ -137,7 +137,7 @@ REST_FRAMEWORK = {
     'TIME_FORMAT': 'iso-8601',
 }
 
-# OAUTH2_PROVIDER_APPLICATION_MODEL = 'madeasy_auth.OauthApplication'
+OAUTH2_PROVIDER_APPLICATION_MODEL = 'madeasy_auth.OauthApplication'
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
