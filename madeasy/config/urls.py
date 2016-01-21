@@ -15,14 +15,19 @@ Including another URLconf
 """
 
 from django.conf.urls import include, url
+from django.conf import settings
 
 urlpatterns = [
     url(r'^o/',
         include('oauth2_provider.urls', namespace='oauth2_provider')),
-    url(r'^auth/',
+    url(r'^accounts/',
+        include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^api/auth/',
         include('madeasy.madeasy_auth.urls', namespace='auth')),
-    url(r'^booking/',
+    url(r'^api/booking/',
         include('madeasy.booking.urls', namespace='booking')),
-    url(r'^airline/',
+    url(r'^api/airline/',
         include('madeasy.airline.urls', namespace='airline')),
+    url(r'^static/(?P<path>.*)$',
+        'django.views.static.serve', {'document_root': settings.STATIC_ROOT})
 ]
