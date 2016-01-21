@@ -10,36 +10,36 @@ class UserManager(BaseUserManager):
     A custom user manager for emr
     """
     def create_user(
-            self, first_name=None, last_name=None, email=None, password=None,
-            **extra_fields):
+            self, first_name=None, last_name=None, email=None, password=None):
         """
         Creates and saves a User with the given email, date of
         birth and password.
         """
+
         if not email:
             raise ValueError('Users must have an email address')
 
         user = self.model(
-            first_name, last_name, email=self.normalize_email(email),
-            **extra_fields)
+            first_name=first_name, last_name=last_name,
+            email=self.normalize_email(email))
 
         user.set_password(password)
         user.save(using=self._db)
 
         return user
 
-    def create_superuser(self, first_name=None, last_name=None, email=None,
-                         password=None, **extra_fields):
+    def create_superuser(self, email=None, first_name=None, last_name=None,
+                         password=None):
         """
         Creates and saves a User with the given email, date of
         birth and password.
         """
+
         user = self.create_user(
             first_name,
             last_name,
             email=email,
-            password=password,
-            **extra_fields
+            password=password
         )
         user.is_admin = True
         user.save(using=self._db)
