@@ -7,7 +7,10 @@ from madeasy.airline.models import (
 )
 
 
-BOOKING_STATUS = ()
+BOOKING_STATUS = (
+    ('CONFIRMED', 'CONFIRMED'),
+    ('PENDING', 'PENDING')
+)
 
 
 class TicketType(models.Model):
