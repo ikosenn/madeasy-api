@@ -13,9 +13,21 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
-from django.contrib import admin
+
+from django.conf.urls import include, url
+from django.conf import settings
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    url(r'^o/',
+        include('oauth2_provider.urls', namespace='oauth2_provider')),
+    url(r'^accounts/',
+        include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^api/auth/',
+        include('madeasy.madeasy_auth.urls', namespace='auth')),
+    url(r'^api/booking/',
+        include('madeasy.booking.urls', namespace='booking')),
+    url(r'^api/airline/',
+        include('madeasy.airline.urls', namespace='airline')),
+    url(r'^static/(?P<path>.*)$',
+        'django.views.static.serve', {'document_root': settings.STATIC_ROOT})
 ]
