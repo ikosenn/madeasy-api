@@ -100,6 +100,15 @@ def server():
     _manage('runserver', args='8092')
 
 
+@click.command()
+def deploy():
+    """
+    Build a package and upload it to the kosen pip registry
+    """
+    p = run('python setup.py sdist upload -r kosen')
+    _fail_loudly(p)
+
+
 @click.group()
 def cli():
     """
@@ -115,6 +124,7 @@ cli.add_command(test_with_clean_db)
 cli.add_command(reset)
 cli.add_command(setup)
 cli.add_command(server)
+cli.add_command(deploy)
 
 
 if __name__ == '__main__':
