@@ -1,13 +1,21 @@
 dependencies:
   pre:
     - sudo apt-get install python3-all-dev
- 
+    - cp ./.pypirc $HOME/.pypirc
+    - if [[ ! -e $HOME/.pip ]]; then mkdir $HOME/.pip; fi
+    - cp ./.pip.conf $HOME/.pip/pip.conf
+    - pip install -r requirements-test.txt
+
 test:
   override:
     - run test:
         environment:
             DATABASE_URL: postgres://ubuntu@localhost:5432/circle_test
-
+deployment:
+    production:
+        branch: master
+        commands:
+            - run deploy
 general:
   artifacts:
     - "coverage/"
