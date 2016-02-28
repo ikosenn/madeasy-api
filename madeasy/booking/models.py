@@ -21,6 +21,9 @@ class TicketType(models.Model):
 
     ticket_code = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.ticket_code
+
 
 class BookingStatus(models.Model):
     """
@@ -28,6 +31,9 @@ class BookingStatus(models.Model):
     """
 
     name = models.CharField(max_length=50, choices=BOOKING_STATUS)
+
+    def __str__(self):
+        return self.name
 
 
 class Booking(models.Model):
@@ -41,3 +47,6 @@ class Booking(models.Model):
     ticket_type = models.ForeignKey(TicketType)
     flight = models.ForeignKey(Flight)
     travel_class = models.ForeignKey(TravelClass)
+
+    def __str__(self):
+        return " - ".join([self.fligt.flight_number, self.booking_status.name])

@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     # 'rest_auth',
     'madeasy.madeasy_auth',
     'madeasy.airline',
-    'madeasy.booking'
+    'madeasy.booking',
+    'madeasy.payment'
 ]
 
 MIDDLEWARE_CLASSES = [
