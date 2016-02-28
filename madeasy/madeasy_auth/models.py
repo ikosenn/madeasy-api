@@ -67,6 +67,9 @@ class User(AbstractBaseUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
 
+    def __str__(self):
+        return self.email
+
 
 class UserProfile(models.Model):
     """
@@ -78,6 +81,9 @@ class UserProfile(models.Model):
     address = models.CharField(max_length=255, null=True)
     city = models.CharField(max_length=255, null=True)
     country = models.CharField(max_length=255)
+
+    def __str__(self):
+        return " - ".join([self.user.email, self.phone_number])
 
 
 class OauthApplication(AbstractApplication):
