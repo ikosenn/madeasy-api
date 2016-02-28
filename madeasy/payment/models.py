@@ -1,9 +1,9 @@
 from django.db import models
-from madeasy.booking import Booking
+from madeasy.booking.models import Booking
 
 
 PAYMENT_TYPE = (
-    ('M-PESA', 'MPESA')
+    ('M-PESA', 'MPESA'),
 )
 
 
