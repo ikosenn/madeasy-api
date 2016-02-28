@@ -7,7 +7,13 @@ from .models import (
     TravelClass,
     Flight,
     TravelClassSeatCapacity,
+    Airport,
 )
+
+
+class AirportSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Airport
 
 
 class AirlineSerializer(serializers.ModelSerializer):
