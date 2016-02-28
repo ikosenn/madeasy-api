@@ -1,7 +1,4 @@
-from rest_framework.generics import (
-    ListCreateAPIView,
-    RetrieveUpdateDestroyAPIView,
-)
+from rest_framework import viewsets
 
 from .models import (
     Airline,
@@ -9,9 +6,11 @@ from .models import (
     TravelClass,
     Flight,
     TravelClassSeatCapacity,
+    Airport
 )
 
 from .serializers import (
+    AirportSerializer,
     AirlineSerializer,
     AirplaneSerializer,
     TravelClassSerializer,
@@ -20,66 +19,37 @@ from .serializers import (
 )
 
 
-class AirlineListView(ListCreateAPIView):
+class AirportViewSet(viewsets.ModelViewSet):
+
+    queryset = Airport.objects.all()
+    serializer_class = AirportSerializer
+
+
+class AirlineViewSet(viewsets.ModelViewSet):
 
     queryset = Airline.objects.all()
     serializer_class = AirlineSerializer
 
 
-class AirlineDetailView(RetrieveUpdateDestroyAPIView):
-
-    queryset = Airline.objects.all()
-    serializer_class = AirlineSerializer
-    lookup_field = 'pk'
-
-
-class AirplaneListView(ListCreateAPIView):
+class AirplaneViewSet(viewsets.ModelViewSet):
 
     queryset = Airplane.objects.all()
     serializer_class = AirplaneSerializer
 
 
-class AirplaneDetailView(RetrieveUpdateDestroyAPIView):
-
-    queryset = Airplane.objects.all()
-    serializer_class = AirplaneSerializer
-    lookup_field = 'pk'
-
-
-class TravelClassListView(ListCreateAPIView):
+class TravelClassViewSet(viewsets.ModelViewSet):
 
     queryset = TravelClass.objects.all()
     serializer_class = TravelClassSerializer
 
 
-class TravelClassDetailView(RetrieveUpdateDestroyAPIView):
-
-    queryset = TravelClass.objects.all()
-    serializer_class = TravelClassSerializer
-    lookup_field = 'pk'
-
-
-class FlightListView(ListCreateAPIView):
+class FlightViewSet(viewsets.ModelViewSet):
 
     queryset = Flight.objects.all()
     serializer_class = FlightSerializer
 
 
-class FlightDetailView(RetrieveUpdateDestroyAPIView):
-
-    queryset = Flight.objects.all()
-    serializer_class = FlightSerializer
-    lookup_field = 'pk'
-
-
-class TravelClassSeatCapacityListView(ListCreateAPIView):
+class TravelClassSeatCapacityViewSet(viewsets.ModelViewSet):
 
     queryset = TravelClassSeatCapacity.objects.all()
     serializer_class = TravelClassSeatCapacitySerializer
-
-
-class TravelClassSeatCapacityDetailView(RetrieveUpdateDestroyAPIView):
-
-    queryset = TravelClassSeatCapacity.objects.all()
-    serializer_class = TravelClassSeatCapacitySerializer
-    lookup_field = 'pk'

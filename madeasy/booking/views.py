@@ -1,7 +1,4 @@
-from rest_framework.generics import (
-    ListCreateAPIView,
-    RetrieveUpdateDestroyAPIView,
-)
+from rest_framework import viewsets
 
 from .models import (
     TicketType,
@@ -16,40 +13,19 @@ from .serializers import (
 )
 
 
-class TicketTypeListView(ListCreateAPIView):
+class TicketTypeViewSet(viewsets.ModelViewSet):
 
     queryset = TicketType.objects.all()
     serializer_class = TicketTypeSerializer
 
 
-class TicketTypeDetailView(RetrieveUpdateDestroyAPIView):
-
-    queryset = TicketType.objects.all()
-    serializer_class = TicketTypeSerializer
-    lookup_field = 'pk'
-
-
-class BookingStatusListView(ListCreateAPIView):
+class BookingStatusViewSet(viewsets.ModelViewSet):
 
     queryset = BookingStatus.objects.all()
     serializer_class = BookingStatusSerializer
 
 
-class BookingStatusDetailView(RetrieveUpdateDestroyAPIView):
-
-    queryset = BookingStatus.objects.all()
-    serializer_class = BookingStatusSerializer
-    lookup_field = 'pk'
-
-
-class BookingListView(ListCreateAPIView):
+class BookingViewSet(viewsets.ModelViewSet):
 
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
-
-
-class BookingDetailView(RetrieveUpdateDestroyAPIView):
-
-    queryset = Booking.objects.all()
-    serializer_class = BookingSerializer
-    lookup_field = 'pk'

@@ -1,28 +1,15 @@
-from django.conf.urls import url
+from rest_framework import routers
 
 from .views import (
-    TicketTypeListView,
-    TicketTypeDetailView,
-    BookingStatusListView,
-    BookingStatusDetailView,
-    BookingListView,
-    BookingDetailView,
+    TicketTypeViewSet,
+    BookingStatusViewSet,
+    BookingViewSet,
 )
 
 
-urlpatterns = [
-    url(r'^ticket_types/$',
-        TicketTypeListView.as_view(), name='ticket_types_list'),
-    url(r'^ticket_types/(?P<pk>[0-9]+)/$',
-        TicketTypeDetailView.as_view(), name='ticket_types_detail'),
+router = routers.DefaultRouter()
+router.register(r'ticket_types', TicketTypeViewSet)
+router.register(r'booking_status', BookingStatusViewSet)
+router.register(r'bookings', BookingViewSet)
 
-    url(r'^booking_status/$',
-        BookingStatusListView.as_view(), name='booking_status_list'),
-    url(r'^booking_status/(?P<pk>[0-9]+)/$',
-        BookingStatusDetailView.as_view(), name='booking_status_detail'),
-
-    url(r'^bookings/$',
-        BookingListView.as_view(), name='bookings_list'),
-    url(r'^bookings/(?P<pk>[0-9]+)/$',
-        BookingDetailView.as_view(), name='bookings_detail'),
-]
+urlpatterns = router.urls

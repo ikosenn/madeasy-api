@@ -26,6 +26,8 @@ urlpatterns = [
         include('madeasy.madeasy_auth.urls', namespace='auth')),
     url(r'^api/booking/',
         include('madeasy.booking.urls', namespace='booking')),
+    url(r'^api/payment/',
+        include('madeasy.payment.urls', namespace='payment')),
     url(r'^api/airline/',
         include('madeasy.airline.urls', namespace='airline')),
     url(r'^static/(?P<path>.*)$',
