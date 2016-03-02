@@ -57,9 +57,7 @@ class User(AbstractBaseUser):
                               max_length=255, unique=True)
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
-    # used to determine if a user should change their password
-    # on during login.
-    is_initial = models.BooleanField(default=True)
+
     is_active = models.BooleanField(default=True)
 
     objects = UserManager()
