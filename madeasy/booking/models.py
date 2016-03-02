@@ -6,6 +6,7 @@ from madeasy.airline.models import (
     Flight,
 )
 
+from madeasy.common.models import AbstractBase
 
 BOOKING_STATUS = (
     ('CONFIRMED', 'CONFIRMED'),
@@ -13,7 +14,7 @@ BOOKING_STATUS = (
 )
 
 
-class TicketType(models.Model):
+class TicketType(AbstractBase):
     """
     What a passenger uses to identify their booking
     and succesful payment
@@ -25,7 +26,7 @@ class TicketType(models.Model):
         return self.ticket_code
 
 
-class BookingStatus(models.Model):
+class BookingStatus(AbstractBase):
     """
     The status that a particular booking can belong to
     """
@@ -36,7 +37,7 @@ class BookingStatus(models.Model):
         return self.name
 
 
-class Booking(models.Model):
+class Booking(AbstractBase):
     """
     Stores the booking of a particular class
     """

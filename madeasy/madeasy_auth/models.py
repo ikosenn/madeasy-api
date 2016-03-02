@@ -3,6 +3,7 @@ from django.contrib.auth.models import (
 )
 from django.db import models
 from oauth2_provider.models import AbstractApplication
+from madeasy.common.models import AbstractBase
 
 
 class UserManager(BaseUserManager):
@@ -69,7 +70,7 @@ class User(AbstractBaseUser):
         return self.email
 
 
-class UserProfile(models.Model):
+class UserProfile(AbstractBase):
     """
     Contains more details about a user
     """

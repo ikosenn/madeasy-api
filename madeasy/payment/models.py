@@ -1,5 +1,6 @@
 from django.db import models
 from madeasy.booking.models import Booking
+from madeasy.common.model import AbstractBase
 
 
 PAYMENT_TYPE = (
@@ -7,7 +8,7 @@ PAYMENT_TYPE = (
 )
 
 
-class Payment(models.Model):
+class Payment(AbstractBase):
     """
     Records the payment of a particular booking.
     Multiple payments can be made for each booking
