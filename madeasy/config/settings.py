@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework',
     # 'rest_auth',
     'madeasy.data_bootstrap',
+    'madeasy.common',
     'madeasy.madeasy_auth',
     'madeasy.airline',
     'madeasy.booking',

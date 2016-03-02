@@ -47,7 +47,7 @@ class UserManager(BaseUserManager):
         return user
 
 
-class User(AbstractBaseUser):
+class User(AbstractBase, AbstractBaseUser):
     """
     A custom user manager for madeasy user
     """

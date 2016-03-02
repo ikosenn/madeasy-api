@@ -1,6 +1,6 @@
 from django.db import models
 from madeasy.booking.models import Booking
-from madeasy.common.model import AbstractBase
+from madeasy.common.models import AbstractBase
 
 
 PAYMENT_TYPE = (
