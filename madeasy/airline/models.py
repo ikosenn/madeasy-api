@@ -1,7 +1,8 @@
 from django.db import models
+from madeasy.common.models import AbstractBase
 
 
-class Airport(models.Model):
+class Airport(AbstractBase):
     """
     This detail the location of an airport. This is either
     where the aircraft's destination or origin location
@@ -15,7 +16,7 @@ class Airport(models.Model):
         return self.airport_name
 
 
-class Airline(models.Model):
+class Airline(AbstractBase):
     """
     These is an airline to which a plane can belong to such as
     KLM
@@ -26,7 +27,7 @@ class Airline(models.Model):
         return self.name
 
 
-class Airplane(models.Model):
+class Airplane(AbstractBase):
     """
     The actual aircraft
     """
@@ -38,7 +39,7 @@ class Airplane(models.Model):
         return self.aircraft_type
 
 
-class TravelClass(models.Model):
+class TravelClass(AbstractBase):
     """
     The travel class of the seat
     """
@@ -50,7 +51,7 @@ class TravelClass(models.Model):
         return self.travel_class_name
 
 
-class Flight(models.Model):
+class Flight(AbstractBase):
     """
     This are the details partaining to a single journey.
     e.g. Moving from JKIA to Amsterdam
@@ -69,7 +70,7 @@ class Flight(models.Model):
         return self.flight_number
 
 
-class TravelClassSeatCapacity(models.Model):
+class TravelClassSeatCapacity(AbstractBase):
     """
     Through table between a travel class and a flight
     """
