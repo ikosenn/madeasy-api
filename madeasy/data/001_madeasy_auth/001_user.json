@@ -1,0 +1,17 @@
+[
+    {
+        "records": [
+            {
+                "id": 1,
+                "first_name": "Ian",
+                "last_name": "Kosen",
+                "email": "i@ikosenn.me",
+                "is_admin": true
+            }
+        ],
+        "model": "madeasy_auth.User",
+        "unique_fields": [
+            "id"
+        ]
+    }
+]

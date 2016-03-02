@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     # 'rest_auth',
+    'madeasy.data_bootstrap',
     'madeasy.madeasy_auth',
     'madeasy.airline',
     'madeasy.booking',

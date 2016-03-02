@@ -29,6 +29,7 @@ setup(
         'click==6.2',
         'dj-database-url==0.3.0',
         'sarge==0.1.4',
+        'ujson==1.35',
     ],
     scripts=[
         'bin/madeasy_manage',
