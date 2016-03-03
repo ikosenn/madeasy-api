@@ -1,23 +1,21 @@
-from rest_framework import serializers
-
-
-from .models import (
+from madeasy.common.serializers import AuditFieldsMixin
+from madeasy.madeasy_auth.models import (
     User,
     UserProfile,
     OauthApplication,
 )
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserSerializer(AuditFieldsMixin):
     class Meta:
         model = User
 
 
-class UserProfileSerializer(serializers.ModelSerializer):
+class UserProfileSerializer(AuditFieldsMixin):
     class Meta:
         model = UserProfile
 
 
-class OauthApplicationSerializer(serializers.ModelSerializer):
+class OauthApplicationSerializer(AuditFieldsMixin):
     class Meta:
         model = OauthApplication

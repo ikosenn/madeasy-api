@@ -1,7 +1,8 @@
 from django.db import models
+from madeasy.common.models import AbstractBase
 
 
-class ParserResults(models.Model):
+class ParserResults(AbstractBase):
     """
     This model store the statistics of a particular
     """
