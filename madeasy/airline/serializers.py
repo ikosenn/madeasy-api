@@ -1,7 +1,6 @@
-from rest_framework import serializers
+from madeasy.common.serializers import AuditFieldsMixin
 
-
-from .models import (
+from madeasy.airline.models import (
     Airline,
     Airplane,
     TravelClass,
@@ -11,31 +10,31 @@ from .models import (
 )
 
 
-class AirportSerializer(serializers.ModelSerializer):
+class AirportSerializer(AuditFieldsMixin):
     class Meta:
         model = Airport
 
 
-class AirlineSerializer(serializers.ModelSerializer):
+class AirlineSerializer(AuditFieldsMixin):
     class Meta:
         model = Airline
 
 
-class AirplaneSerializer(serializers.ModelSerializer):
+class AirplaneSerializer(AuditFieldsMixin):
     class Meta:
         model = Airplane
 
 
-class TravelClassSerializer(serializers.ModelSerializer):
+class TravelClassSerializer(AuditFieldsMixin):
     class Meta:
         model = TravelClass
 
 
-class FlightSerializer(serializers.ModelSerializer):
+class FlightSerializer(AuditFieldsMixin):
     class Meta:
         model = Flight
 
 
-class TravelClassSeatCapacitySerializer(serializers.ModelSerializer):
+class TravelClassSeatCapacitySerializer(AuditFieldsMixin):
     class Meta:
         model = TravelClassSeatCapacity

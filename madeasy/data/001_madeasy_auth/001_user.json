@@ -6,7 +6,8 @@
                 "first_name": "Ian",
                 "last_name": "Kosen",
                 "email": "i@ikosenn.me",
-                "is_admin": true
+                "is_admin": true,
+                "password": "pbkdf2_sha256$20000$NdnK84zZYjkt$f5btz29FtR/TGhQrbQKyDLs0VBSQYiKeXBHiBz2WCMU="
             }
         ],
         "model": "madeasy_auth.User",

@@ -30,6 +30,8 @@ urlpatterns = [
         include('madeasy.payment.urls', namespace='payment')),
     url(r'^api/airline/',
         include('madeasy.airline.urls', namespace='airline')),
+
+    url(r'^api/parser/', include('madeasy.parser.urls', namespace='parser')),
     url(r'^static/(?P<path>.*)$',
         'django.views.static.serve', {'document_root': settings.STATIC_ROOT})
 ]

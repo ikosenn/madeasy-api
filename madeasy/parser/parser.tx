@@ -1,0 +1,23 @@
+book a flight to dubai on [date] to [date2]
+search for available flights on [date]
+show my booked flights
+show my upcoming flights
+show me flight to [country] with a price below [price]
+
+
+Program:
+    commands*=Command
+;
+
+Command:
+    BookCommand | SearchCommand | ShowCommand
+;
+
+BookCommand:
+    'book a flight to' country_arrive=Country 'from' country_departure=Country 'on' date_leave=Date ('to' date_return=Date)?
+;
+
+
+Country:
+    /\W/
+;

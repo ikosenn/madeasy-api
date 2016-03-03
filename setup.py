@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 name = 'madeasy-api'
-version = '0.0.1'
+version = '0.0.2'
 
 
 setup(
@@ -30,6 +30,7 @@ setup(
         'dj-database-url==0.3.0',
         'sarge==0.1.4',
         'ujson==1.35',
+        'textX==0.4.2',
     ],
     scripts=[
         'bin/madeasy_manage',

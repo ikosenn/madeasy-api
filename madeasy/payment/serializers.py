@@ -1,11 +1,9 @@
-from rest_framework import serializers
-
-
-from .models import (
+from madeasy.common.serializers import AuditFieldsMixin
+from madeasy.payment.models import (
     Payment
 )
 
 
-class PaymentSerializer(serializers.ModelSerializer):
+class PaymentSerializer(AuditFieldsMixin):
     class Meta:
         model = Payment

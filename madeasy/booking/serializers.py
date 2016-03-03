@@ -1,23 +1,22 @@
-from rest_framework import serializers
+from madeasy.common.serializers import AuditFieldsMixin
 
-
-from .models import (
+from madeasy.booking.models import (
     TicketType,
     BookingStatus,
     Booking,
 )
 
 
-class TicketTypeSerializer(serializers.ModelSerializer):
+class TicketTypeSerializer(AuditFieldsMixin):
     class Meta:
         model = TicketType
 
 
-class BookingStatusSerializer(serializers.ModelSerializer):
+class BookingStatusSerializer(AuditFieldsMixin):
     class Meta:
         model = BookingStatus
 
 
-class BookingSerializer(serializers.ModelSerializer):
+class BookingSerializer(AuditFieldsMixin):
     class Meta:
         model = Booking
