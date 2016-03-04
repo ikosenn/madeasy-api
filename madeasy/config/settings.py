@@ -89,7 +89,7 @@ WSGI_APPLICATION = 'madeasy.config.wsgi.application'
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 db_url = 'postgres://madeasy_user:madeasy@localhost:5432/madeasy'
 
-DATABASES = {'default': dj_database_url.config(default=db_url)}
+DATABASES = {'default': dj_database_url.config(env='blahblah', default=db_url)}
 DATABASES['default']['CONN_MAX_AGE'] = 60
 
 # Password validation
