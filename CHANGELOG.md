@@ -5,3 +5,4 @@ CHANGELOG
 - Parser Results model
 - Parser Results api endpoints
 - AuditFields mixin serializer
+- Add a regex for the date

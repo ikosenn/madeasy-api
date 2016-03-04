@@ -1,16 +1,9 @@
-book a flight to dubai on [date] to [date2]
-search for available flights on [date]
-show my booked flights
-show my upcoming flights
-show me flight to [country] with a price below [price]
-
-
 Program:
     commands*=Command
 ;
 
 Command:
-    BookCommand | SearchCommand | ShowCommand
+    BookCommand // | SearchCommand | ShowCommand
 ;
 
 BookCommand:
@@ -19,5 +12,9 @@ BookCommand:
 
 
 Country:
-    /\W/
+    /[a-zA-Z]+/
+;
+
+Date:
+    /(0[1-9]|[12][0-9]|3[01])([-\/.])(0[1-9]|1[012])\2(19|20)\d\d/
 ;
