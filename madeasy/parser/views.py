@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import viewsets
 
+from textx.exceptions import TextXSyntaxError
 from madeasy.parser import parser_mm
 from madeasy.parser.parser import Parser
 from madeasy.parser.serializers import (
@@ -21,13 +22,21 @@ class ParserView(APIView):
         serializer = ParserSerializer(data=request.data)
         if serializer.is_valid():
             query = serializer.data.get('query')
-            print(query)
-            parser_model = parser_mm.model_from_str(query)
-            parser_obj = Parser()
-            parser_obj.interpret(parser_model)
+            try:
+                parser_model = parser_mm.model_from_str(query)
+                parser_obj = Parser()
+                parser_obj.interpret(parser_model)
+                if parser_obj.errors:
+                    # This are errors obtained when parsing a valid query
+                    errors = parser_obj.errors
+                    return Response(errors, status=status.HTTP_400_BAD_REQUEST)
+                return Response(serializer.data)
+            except TextXSyntaxError:
+                error = {
+                    'detail': ('The query was not properly formatted.'
+                               ' Kindly see below for examples')}
 
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(error, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ParserResultsViewSet(viewsets.ModelViewSet):
