@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 name = 'madeasy-api'
-version = '0.0.2'
+version = '0.0.3'
 
 
 setup(
@@ -31,6 +31,7 @@ setup(
         'sarge==0.1.4',
         'ujson==1.35',
         'textX==0.4.2',
+        'python-dateutil==2.5.0'
     ],
     scripts=[
         'bin/madeasy_manage',
