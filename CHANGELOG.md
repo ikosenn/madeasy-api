@@ -16,3 +16,7 @@ CHANGELOG
 ## 0.0.4 - 2016-03-13
 ### Added
 - Add tx files to MANIFEST
+
+## 0.0.5 - 2016-03-13
+### Changed
+- The location of static files folder
