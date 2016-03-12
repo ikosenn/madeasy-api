@@ -4,3 +4,4 @@ include tox.ini
 graft madeasy/data
 include madeasy/templates/*.html
 include madeasy/templates/rest_framework/*.html
+include madeasy/parser/*.tx
