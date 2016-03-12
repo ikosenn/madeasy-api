@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 name = 'madeasy-api'
-version = '0.0.3'
+version = '0.0.4'
 
 
 setup(
@@ -11,6 +11,7 @@ setup(
     description="A travel companion",
     long_description=open('README.md').read(),
     author="@ikosenn",
+    url="https://api/madeasy.io",
     author_email='kosen@madeasy.io',
     license="MIT",
     classifiers=[
