@@ -27,3 +27,7 @@ CHANGELOG
 
 ### Added
 - Playbook to deploy the api
+
+## 0.0.7 - 2016-03-13
+### Added
+- Add a variable to the env for the static files path during production
