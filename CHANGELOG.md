@@ -30,4 +30,8 @@ CHANGELOG
 
 ## 0.0.7 - 2016-03-13
 ### Added
-- Add a variable to the env for the static files path during production
+-  Variable to the env for the static files path during production
+
+## 0.0.8 - 2016-03-13
+### Added
+- Static file to the MANIFEST.in
