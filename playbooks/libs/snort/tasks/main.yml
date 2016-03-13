@@ -1,0 +1,5 @@
+---
+- name: Install snort
+  apt: name=snort state=present
+  tags: snort
+  sudo: yes

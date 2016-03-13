@@ -1,0 +1,15 @@
+---
+- name: restart td-agent
+  command: /etc/init.d/td-agent restart
+  sudo: yes
+  tags: ["td-agent"]
+
+- name: start td-agent
+  command: /etc/init.d/td-agent start
+  sudo: yes
+  tags: ["td-agent"]
+
+- name: stop td-agent
+  command: /etc/init.d/td-agent stop
+  sudo: yes
+  tags: ["td-agent"]

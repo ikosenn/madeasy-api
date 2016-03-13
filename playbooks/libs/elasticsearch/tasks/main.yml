@@ -1,0 +1,12 @@
+---
+- name: Download elasticsearch
+  get_url: >
+    url=https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/2.1.1/elasticsearch-2.1.1.deb
+    dest=/opt/elasticsearch-2.1.1.deb
+  tags: elasticsearch
+  become_user: root
+
+- name: Install elasticsearch
+  apt: deb=/opt/elasticsearch-2.1.1.deb
+  tags: elasticsearch
+  become_user: root

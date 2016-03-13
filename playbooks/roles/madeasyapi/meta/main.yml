@@ -1,0 +1,10 @@
+---
+
+dependencies:
+  - common
+  - python
+  - nginx
+  - letsencrypt
+  - postgresql-server
+  - ufw
+  - supervisor

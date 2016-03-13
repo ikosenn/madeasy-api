@@ -1,0 +1,17 @@
+---
+install_dir: "/opt/madeasyapi"
+log_dir: "/var/log/madeasyapi"
+venv_dir: "{{install_dir}}/venv"
+static_dir: "{{install_dir}}/static"
+media_dir: "{{install_dir}}/media"
+django_manage: "{{ venv_dir }}/bin/madeasy_manage"
+server_url: "{{server_domain}}"
+env_file: "madeasyapi.env.sh"
+initialization_file: "madeasyapi.initialize.sh"
+db_host: localhost
+db_port: 5432
+database_url: "postgres://{{db_user}}:{{db_pass}}@{{db_host}}:{{db_port}}/{{db_name}}"
+madeasyapi_port: 8092
+csrf_cookie_name: "somecsrfcookienamehere"
+session_cookie_name: "somesessioncokkiehere"
+ssl_on: false

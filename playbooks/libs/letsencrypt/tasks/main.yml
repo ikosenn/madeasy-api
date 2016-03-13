@@ -1,0 +1,35 @@
+- name: Install letsencrypt dependencies
+  apt: name={{ item }} state=present
+  with_items:
+    - python-dev
+    - dialog
+    - libaugeas0
+    - libssl-dev
+    - libffi-dev
+    - ca-certificates
+    - python-pip
+    - git
+    - python-virtualenv
+  tags: letsencrypt
+  become_user: root
+
+- name: Install python dependencies
+  pip: virtualenv="{{ letsencrypt_venv }}" virtualenv_site_packages=no name={{ item }} state=latest
+  with_items:
+    - setuptools
+    - pip
+  tags: letsencrypt
+  become_user: root
+
+- name: Install letsencrypt pip package
+  pip: virtualenv="{{ letsencrypt_venv }}" virtualenv_site_packages=no name=letsencrypt
+  tags: letsencrypt
+  become_user: root
+
+- name: Attempt to get the certificate using the standalone authenticator
+  command: "{{ letsencrypt_command }} -a standalone auth"
+  args:
+    creates: "/etc/letsencrypt/live/{{ madeasy_root_domain }}"
+  when: setup_new_ssl_certs
+  tags: letsencrypt
+  become_user: root

@@ -1,0 +1,8 @@
+---
+- name: Install memcached and libmemcached
+  apt: name={{ item }} state=present
+  become_user: root
+  with_items:
+    - memcached
+    - libmemcached-dev
+  tags: memcached

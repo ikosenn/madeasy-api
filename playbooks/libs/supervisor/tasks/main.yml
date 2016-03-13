@@ -1,0 +1,10 @@
+---
+- name: Install supervisor
+  apt: name=supervisor state=present
+  tags: supervisor
+  become_user: root
+
+
+- name: Start supervisor
+  service: name=supervisor state=started
+  become_user: root

@@ -1,0 +1,56 @@
+---
+- hosts: all
+  vars:
+    deploy_user: deploy
+    deploy_group: deploy
+    api_server_domain: "api.madeasy.io"
+    server_domain: "web.madeasy.io"
+    pg_host: localhost
+    pg_port: 5432
+    lock_file_path: /tmp/ansible-playbook-backend.lock
+    deploy_user_home: /home/{{deploy_user}}
+    force_ignore_lock: true
+    setup_new_ssl_certs: false
+
+  name: Deploy the API server owned by the madeasy
+
+  tags: [ "madeasyapi", "staging" ]
+  pre_tasks:
+    - name: create deploy user
+      user: name="{{deploy_user}}" groups=www-data,sudo state=present
+      sudo: yes
+
+    - name: check if lock_file exists
+      stat: path={{lock_file_path}}
+      register: lock_file
+
+    - name: fail if lock_file exists and has not been ignored
+      fail: msg="Sorry, someone is already running ansible. Add --force to your deploy command to forcefully continue deploying. This is useful if the previous deploy was aborted."
+      when: lock_file.stat.exists|bool and not force_ignore_lock|bool
+
+    - name: remove lock_file if it has been ignored
+      file: path={{lock_file_path}} state=absent
+      sudo: yes
+      when: "{{force_ignore_lock}}"
+
+    - name: touch lock file to update its timestamp
+      file: path={{lock_file_path}} state=touch
+      sudo: yes
+
+  post_tasks:
+    - name: deploy successful, remove lock_file
+      file: path={{lock_file_path}} state=absent
+      sudo: yes
+
+  roles:
+
+    - {
+      role: madeasyapi,
+      madeasy_root_domain: "madeasy.io",
+      server_name: "{{api_server_domain}}",
+      setup_new_db: false,
+      become: yes,
+      become_method: sudo,
+      become_user: "{{deploy_user}}",
+      tags: ["madeasyapi", "staging"]
+      }

@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 name = 'madeasy-api'
-version = '0.0.5'
+version = '0.0.6'
 
 
 setup(
@@ -20,6 +20,7 @@ setup(
         'Programming Language :: Python :: 3 :: Only',
     ],
     install_requires=[
+        'ansible==2.0.1',
         'django==1.9.1',
         'django-oauth-toolkit==0.10.0',
         'psycopg2==2.6.1',
@@ -32,7 +33,9 @@ setup(
         'sarge==0.1.4',
         'ujson==1.35',
         'textX==0.4.2',
-        'python-dateutil==2.5.0'
+        'python-dateutil==2.5.0',
+        'django-mptt==0.8.3',
+
     ],
     scripts=[
         'bin/madeasy_manage',

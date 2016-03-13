@@ -1,0 +1,214 @@
+---
+- name: make installation directory
+  file: name={{ install_dir }} owner={{deploy_user}} group={{deploy_group}} state=directory
+  become_user: root
+  tags: madeasyapi
+
+- name: make log directory
+  file: name={{ log_dir }} group={{deploy_group}} owner={{deploy_user}} state=directory mode=u=rwx,g=rwx,o=r
+  become_user: root
+  tags: madeasyapi
+
+- name: install git
+  apt: name=git state=present
+  become_user: root
+  tags: madeasyapi
+
+- name: Install madeasyapi
+  pip: >-
+    name=madeasy-api version={{madeasyapi_version}} virtualenv={{ venv_dir }} virtualenv_python=/usr/bin/python3.4
+  args:
+    executable: pip3
+  become_user: "{{deploy_user}}"
+  tags: madeasyapi
+
+- name: Create env file
+  template: src={{env_file}} dest={{install_dir}}/env.sh
+  tags: madeasyapi
+
+- name: Create initialization file
+  template: src={{initialization_file}} dest={{install_dir}}/initialize.sh
+  tags: madeasyapi
+
+- name: stop supervisord
+  service: name=supervisor state=stopped
+  become_user: root
+  tags: madeasyapi
+
+- name: Add custom database user for management
+  become_user: postgres
+  shell: >-
+    if psql -tAc "SELECT 1 FROM pg_roles WHERE rolname='{{pg_login_user}}'" | grep -q 1 ; then
+    echo "role '{{pg_login_user}}' exists";
+    else createuser --superuser {{pg_login_user}};
+    fi
+  when: setup_new_db
+  tags: ["madeasyapi", "postgresql_user", "postgresql_create_user"]
+
+- name: alter custom user password
+  become_user: postgres
+  shell: >
+    psql -c "ALTER ROLE {{pg_login_user}} WITH PASSWORD '{{pg_login_password}}';"
+  when: setup_new_db
+  tags: ["madeasyapi", "postgresql_user", "postgresql_change_user_password"]
+
+- name: Add db for custom user for management
+  become_user: postgres
+  shell: >
+    if psql -lqt | cut -d \| -f 1 | grep -wq {{pg_login_user}}; then
+    echo "database {{pg_login_user}} exists";
+    else psql -c "CREATE DATABASE {{pg_login_user}};";
+    fi
+  when: setup_new_db
+  tags: ["madeasyapi", "postgresql_user", "postgresql_database"]
+
+
+- name: setup database user
+  postgresql_user: >
+    name={{db_user}}
+    password={{db_pass}}
+    state=present
+    role_attr_flags=LOGIN,SUPERUSER,CREATEDB,CREATEROLE,REPLICATION
+    login_host={{db_host}}
+    login_user={{pg_login_user}}
+    login_password={{pg_login_password}}
+    port={{db_port}}
+  when: setup_new_db
+  become_user: root
+  tags: madeasyapi
+
+- name: restart postgresql
+  service: >-
+    name=postgresql state=restarted
+  become_user: root
+  when: setup_new_db
+  tags: madeasyapi
+
+- name: drop database
+  postgresql_db: >
+    name={{db_name}}
+    owner={{pg_login_user}}
+    login_host={{db_host}}
+    login_user={{pg_login_user}}
+    login_password={{pg_login_password}}
+    port={{db_port}}
+    state=absent
+  when: setup_new_db
+  become_user: root
+  tags: madeasyapi
+
+- name: setup database
+  postgresql_db: >
+    name={{db_name}}
+    owner={{pg_login_user}}
+    login_host={{db_host}}
+    login_user={{pg_login_user}}
+    login_password={{pg_login_password}}
+    port={{db_port}}
+    state=present
+  when: setup_new_db
+  become_user: root
+  tags: madeasyapi
+
+
+- name: grant privileges to user on database
+  postgresql_privs: >
+    db={{db_name}}
+    state=present
+    type=database
+    role={{db_user}}
+    privs=ALL
+    login_host={{db_host}}
+    login_user={{pg_login_user}}
+    login_password={{pg_login_password}}
+    port={{db_port}}
+  when: setup_new_db
+  become_user: root
+  tags: madeasyapi
+
+- name: perform django migration
+  shell: '. {{ install_dir }}/env.sh && {{ django_manage }} migrate --noinput'
+  become_user: root
+  tags: madeasyapi
+
+- name: load bootstrap data
+  shell: ". {{install_dir}}/env.sh && {{ django_manage }} bootstrap '{{venv_dir}}/lib/python3.4/site-packages/madeasy/data/*/*.json'"
+  tags: madeasyapi
+
+- name: make static directory
+  file: name={{ static_dir }} owner={{deploy_user}} group={{deploy_group}} state=directory
+  tags: madeasyapi
+
+- name: collect static files
+  shell: '. {{install_dir}}/env.sh && {{django_manage}} collectstatic --link --noinput --clear'
+  tags: madeasyapi
+
+
+- name: set madeasyapi to nginx sites-available
+  template: >
+    src=madeasyapi.nginx.conf
+    dest="/etc/nginx/sites-available/madeasyapi"
+    owner="www-data"
+  tags: madeasyapi
+  become_user: root
+
+- name: set nginx sites-available to sites-enabled
+  file: >
+    src="/etc/nginx/sites-available/madeasyapi"
+    dest="/etc/nginx/sites-enabled/madeasyapi"
+    state=link
+  tags: madeasyapi
+  become_user: root
+
+- name: stop nginx
+  service: >-
+    name=nginx state=stopped
+  become_user: root
+  tags: madeasyapi
+
+- name: start nginx
+  service: >-
+    name=nginx state=started
+  become_user: root
+  tags: madeasyapi
+
+- name: add runfiles for supervisor
+  template: src={{ item.src }} dest={{install_dir}}/{{ item.dest }}
+  tags: madeasyapi
+  with_items:
+      - { src: "madeasyapi.run.sh", dest: "run.sh" }
+
+- name: add supervisor config to supervisord conf.d
+  template: src=madeasyapi.supervisor.conf dest={{supervisor_conf_dir}}/madeasyapi.conf
+  tags: madeasyapi
+  become_user: root
+
+- name: start supervisor
+  service: name=supervisor state=started
+  become_user: root
+  tags: madeasyapi
+
+- name: reread supervisor
+  supervisorctl: name="madeasyapi" state=present
+  become_user: root
+  tags: madeasyapi
+
+- name: stop supervisor
+  supervisorctl: name="madeasyapi" state=stopped
+  become_user: root
+  tags: madeasyapi
+
+- name: start supervisor
+  supervisorctl: name="madeasyapi" state=started
+  become_user: root
+  tags: madeasyapi
+
+- name: allow port 80
+  ufw: port=80 proto=tcp rule=allow
+  tags: madeasyapi
+  become_user: root
+
+- name: enable port 443 through firewall
+  ufw: port=443 proto=tcp rule=allow state=enabled
+  tags: madeasyapi
+  become_user: root
