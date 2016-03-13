@@ -1,0 +1,5 @@
+---
+- name: Install logwatch
+  apt: name=logwatch state=present
+  tags: logwatch
+  sudo: yes

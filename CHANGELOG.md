@@ -20,3 +20,10 @@ CHANGELOG
 ## 0.0.5 - 2016-03-13
 ### Changed
 - The location of static files folder
+
+## 0.0.6 - 2016-03-13
+### Changed
+- Set the Debug settings variable from the env
+
+### Added
+- Playbook to deploy the api

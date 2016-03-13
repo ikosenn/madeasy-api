@@ -1,0 +1,46 @@
+---
+- hosts: all
+  vars:
+    deploy_user: deploy
+    deploy_group: deploy
+    server_domain: "www.slade360emr.com"
+    ssh_port: 2222
+    api_server_domain: "slade360emr.com"
+    deploy_user_home: /home/{{deploy_user}}
+    lock_file_path: /tmp/ansible-playbook-frontend.lock
+    force_ignore_lock: true
+    setup_new_ssl_certs: false
+  name: Deploy emrweb
+  tags: [ "emrweb", "staging" ]
+  pre_tasks:
+    - user: name="{{deploy_user}}" groups=www-data,deploy,sudo state=present
+      sudo: yes
+
+    - stat: path={{lock_file_path}}
+      register: lock_file
+
+    - fail: msg="Sorry, someone is already running ansible. Add --force to your deploy command to forcefully continue deploying. This is useful if the previous deploy was aborted."
+      when: lock_file.stat.exists|bool and not force_ignore_lock|bool
+
+    - file: path={{lock_file_path}} state=absent
+      sudo: yes
+      when: "{{force_ignore_lock}}"
+
+    - file: path={{lock_file_path}} state=touch
+      sudo: yes
+
+  post_tasks:
+    - file: path={{lock_file_path}} state=absent
+      sudo: yes
+
+  roles:
+
+    - {
+      role: emrweb_staging,
+      server_name: "{{server_domain}}",
+      emr_root_domain: "slade360emr.com",
+      become: yes,
+      become_method: sudo,
+      become_user: "{{deploy_user}}",
+      tags: ["emrweb", "staging"]
+      }

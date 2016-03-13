@@ -1,0 +1,32 @@
+---
+- name: Install python, python-dev, python-setuptools, python3-pip and virtualenv
+  apt: name={{ item }} state=present
+  become_user: root
+  tags: python
+  with_items:
+    - python3-dev
+    - python3-setuptools
+    - python3-pip
+    - python-dev
+    - python-virtualenv
+    - python-pip
+
+- name: update pip
+  pip: name=pip state=latest
+  args:
+    executable:"{{item}}"
+  with_items: >-
+    - pip2
+    - pip3
+  tags: pip
+  become_user: root
+
+- name: ensure $HOME/.pip exists
+  file: name={{deploy_user_home}}/.pip state=directory owner={{deploy_user}}
+  become_user: root
+  tags: pip
+
+- name: add pip credentials
+  template: src=pip.conf dest={{deploy_user_home}}/.pip/pip.conf owner={{deploy_user}}
+  become_user: root
+  tags: pip

@@ -1,0 +1,5 @@
+---
+- name: Install backports lzma
+  apt: name=liblzma-dev state=present
+  become_user: root
+  tags: backports

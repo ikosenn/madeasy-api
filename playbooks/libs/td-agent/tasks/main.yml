@@ -1,0 +1,28 @@
+---
+
+- name: Increase max no of file descriptors
+  lineinfile: >
+    line="root soft nofile 65536\nroot hard nofile 65536\n* soft nofile 65536\n* hard nofile 65536"
+    dest=/etc/security/limits.conf
+    backup=yes
+    state=present
+  tags: ["td-agent"]
+  sudo: yes
+
+- name: Add gpg key from treasuredata
+  apt_key: url=http://packages.treasuredata.com/GPG-KEY-td-agent state=present
+  sudo: yes
+  tags: ["td-agent"]
+
+- name: Add treasuredata repo to apt
+  apt_repository: >
+    repo="deb [arch=amd64] http://packages.treasuredata.com/2/ubuntu/trusty/ trusty contrib"
+    state=present
+    update_cache=yes
+  sudo: yes
+  tags: ["td-agent"]
+
+- name: Install td-agent
+  apt: name=td-agent state=present
+  sudo: yes
+  tags: ["td-agent"]

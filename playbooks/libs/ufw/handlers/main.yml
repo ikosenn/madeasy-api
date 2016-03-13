@@ -1,0 +1,10 @@
+---
+- name: disable ufw
+  ufw: state=disabled
+  become_user: root
+  tags: ufw
+
+- name: enable ufw
+  ufw: state=enabled
+  become_user: root
+  tags: ufw

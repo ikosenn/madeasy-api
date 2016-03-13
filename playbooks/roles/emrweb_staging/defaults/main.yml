@@ -1,0 +1,26 @@
+---
+
+install_dir: "/opt/emr_frontend_staging"
+download_dir: "{{install_dir}}/downloads"
+extraction_dir: "{{install_dir}}/frontend"
+emrweb_staging_version: "0.4.16"
+archive_base_dir: "bin"
+emrweb_staging_filename: "emr-frontend__{{emrweb_staging_version}}.tar.gz"
+download_url: "https://bower.slade360.co.ke/getpackage/{{emrweb_staging_filename}}"
+server_url: "http://localhost:8092/"
+debug: "true"
+restrict_actions: [
+]
+client_id: ""
+token_url: "/oauth2/token/"
+authorize_url: "/oauth2/authorize/"
+revoke_token_url: "/oauth2/revoke_token/"
+user_info_url: "/user/me/"
+redirect_url: "/complete/"
+user_profile: "/manage/profile/"
+scopes: [
+]
+ssl_cert: "/opt/.cert/slade360_co_ke.combined.crt"
+ssl_cert_key: "/opt/.cert/slade360_co_ke.key"
+ssl_on: false
+server_name: localhost

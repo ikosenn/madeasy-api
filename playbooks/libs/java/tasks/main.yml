@@ -1,0 +1,5 @@
+---
+- name: Install openjdk7 jdk
+  apt: name=openjdk-7-jdk state=present
+  become_user: root
+  tags: openjdk7

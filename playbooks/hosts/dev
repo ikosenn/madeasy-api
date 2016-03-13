@@ -1,0 +1,3 @@
+# development hosts file
+[madeasy_api]
+madeasy.io sudo_magick_needed=true

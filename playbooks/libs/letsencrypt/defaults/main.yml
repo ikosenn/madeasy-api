@@ -1,0 +1,9 @@
+letsencrypt_src_directory: /usr/local/share/letsencrypt
+letsencrypt_venv: "{{ letsencrypt_src_directory }}/env"
+letsencrypt_server: "https://acme-staging.api.letsencrypt.org/directory"
+letsencrypt_live_server: "https://acme-v01.api.letsencrypt.org/directory"
+letsencrypt_cert_domains:
+  - "{{ api_server_domain }}"
+  - "{{ server_domain }}"
+letsencrypt_email: "info@{{  madeasy_root_domain }}"
+letsencrypt_command: "{{ letsencrypt_venv }}/bin/letsencrypt --agree-tos --text {% for domain in letsencrypt_cert_domains %}-d {{ domain }} {% endfor %}--email {{ letsencrypt_email }} {% if letsencrypt_live_server is defined %}--server {{ letsencrypt_live_server }}{% endif %}"

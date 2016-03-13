@@ -1,0 +1,90 @@
+---
+
+- name: remove any existing installations
+  file: state=absent name={{install_dir}}
+  become_user: root
+  tags: emrweb_staging
+
+
+- name: make installation directories
+  file: state=directory name={{item}} owner={{deploy_user}}
+  with_items:
+    - "{{install_dir}}"
+    - "{{download_dir}}"
+    - "{{extraction_dir}}"
+  become_user: root
+  tags: emrweb_staging
+
+
+- name: download emrweb frontend
+  get_url: url={{download_url}} dest={{download_dir}}
+  tags: emrweb_staging
+  become_user: root
+
+- name: extract frontend
+  unarchive: >
+    copy=no
+    src="{{download_dir}}/{{emrweb_staging_filename}}"
+    dest="{{extraction_dir}}"
+  tags: emrweb_staging
+
+- name: move frontend from bin folder
+  shell: "mv {{extraction_dir}}/{{archive_base_dir}}/* {{extraction_dir}}/"
+  tags: emrweb_staging
+
+- name: remove bin folder in extraction dir
+  file: state=absent name={{extraction_dir}}/{{archive_base_dir}}
+  become_user: root
+  tags: emrweb_staging
+
+- name: if ssl_on, set server url in settings.js
+  shell: >-
+     sed -i 's/http\:\/\/localhost\:[89]000/https:\/\/{{api_server_domain}}/g' {{extraction_dir}}/settings.js
+  when: ssl_on
+  tags: emrweb_staging
+
+- name: if ssl_off, set server url in settings.js
+  shell: >-
+     sed -i 's/http\:\/\/localhost\:[89]000/http:\/\/{{api_server_domain}}/g' {{extraction_dir}}/settings.js
+  when: not ssl_on
+  tags: emrweb_staging
+
+
+- name: set nginx sites-available
+  template: >
+    src=emrweb_staging.nginx.conf
+    dest="/etc/nginx/sites-available/emrweb_staging"
+    owner="www-data"
+  become_user: root
+  tags: emrweb_staging
+
+- name: set nginx sites-enabled
+  file: >
+    src="/etc/nginx/sites-available/emrweb_staging"
+    dest="/etc/nginx/sites-enabled/emrweb_staging"
+    state=link
+  become_user: root
+  tags: emrweb_staging
+
+- name: stop nginx
+  shell: >-
+    service nginx stop
+  become_user: root
+  tags: emrweb_staging
+
+- name: start nginx
+  shell: >-
+    service nginx start
+  become_user: root
+  tags: emrweb_staging
+
+- name: enable port 80 through firewall
+  ufw: port=80 proto=tcp rule=allow state=enabled
+  tags: emrweb_staging
+  become_user: root
+
+- name: enable port 443 through firewall
+  ufw: port=443 proto=tcp rule=allow state=enabled
+  tags: emrweb_staging
+  become_user: root
+  when: ssl_on

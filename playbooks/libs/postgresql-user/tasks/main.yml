@@ -1,0 +1,27 @@
+---
+- name: Add custom user for management
+  sudo: yes
+  sudo_user: postgres
+  shell: >-
+    if psql -tAc "SELECT 1 FROM pg_roles WHERE rolname='{{pg_login_user}}'" | grep -q 1 ; then 
+    echo "role '{{pg_login_user}}' exists";
+    else createuser --superuser {{pg_login_user}};
+    fi
+  tags: ["postgresql_user", "postgresql_create_user"]
+
+- name: alter password
+  sudo: yes
+  sudo_user: postgres
+  shell: >
+    psql -c "ALTER ROLE {{pg_login_user}} WITH PASSWORD '{{pg_login_password}}';"
+  tags: ["postgresql_user", "postgresql_change_user_password"]
+
+- name: Add db for custom user for management
+  sudo: yes
+  sudo_user: postgres
+  shell: >
+    if psql -lqt | cut -d \| -f 1 | grep -wq {{pg_login_user}}; then 
+    echo "database {{pg_login_user}} exists";
+    else psql -c "CREATE DATABASE {{pg_login_user}};";
+    fi
+  tags: ["postgresql_user", "postgresql_database"]
