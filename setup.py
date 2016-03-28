@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 name = 'madeasy-api'
-version = '0.0.8'
+version = '0.0.10'
 
 
 setup(
@@ -20,7 +20,7 @@ setup(
         'Programming Language :: Python :: 3 :: Only',
     ],
     install_requires=[
-        'ansible==2.0.1',
+        'ansible==2.0.0',
         'django==1.9.1',
         'django-oauth-toolkit==0.10.0',
         'psycopg2==2.6.1',

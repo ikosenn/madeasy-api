@@ -10,7 +10,7 @@ CHANGELOG
 ## 0.0.3 - 2016-03-04
 ### Added
 - Serializer to handle Book Commands
-- Include data and rest-framework tempates in MANIFEST.in
+- Include data and rest-framework templates in MANIFEST.in
 - Add dateutils to parse dates
 
 ## 0.0.4 - 2016-03-13
@@ -35,3 +35,19 @@ CHANGELOG
 ## 0.0.8 - 2016-03-13
 ### Added
 - Static file to the MANIFEST.in
+
+## 0.0.9 - 2016-03-15
+### Added
+- Reset the migrations
+- Added RouteTree and Route models
+- Default data for airlines and airports
+
+### Changed
+- The Airline and Airport models
+
+
+## 0.0.10 - 2016-03-27
+### Added
+- Default data for the application, RouteTree
+- Me endpoint for user details
+-

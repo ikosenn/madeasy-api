@@ -6,7 +6,9 @@ from .models import (
     TravelClass,
     Flight,
     TravelClassSeatCapacity,
-    Airport
+    Airport,
+    Route,
+    RouteTree
 )
 
 from .serializers import (
@@ -16,6 +18,8 @@ from .serializers import (
     TravelClassSerializer,
     FlightSerializer,
     TravelClassSeatCapacitySerializer,
+    RouteSerializer,
+    RouteTreeSerializer
 )
 
 
@@ -47,6 +51,18 @@ class FlightViewSet(viewsets.ModelViewSet):
 
     queryset = Flight.objects.all()
     serializer_class = FlightSerializer
+
+
+class RouteViewSet(viewsets.ModelViewSet):
+
+    queryset = Route.objects.all()
+    serializer_class = RouteSerializer
+
+
+class RouteTreeViewSet(viewsets.ModelViewSet):
+
+    queryset = RouteTree.objects.all()
+    serializer_class = RouteTreeSerializer
 
 
 class TravelClassSeatCapacityViewSet(viewsets.ModelViewSet):

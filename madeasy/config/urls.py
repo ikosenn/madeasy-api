@@ -18,6 +18,8 @@ from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.conf import settings
 
+from madeasy.madeasy_auth.views import MeView
+
 urlpatterns = [
     url(r'^o/',
         include('oauth2_provider.urls', namespace='oauth2_provider')),
@@ -33,5 +35,6 @@ urlpatterns = [
         include('madeasy.airline.urls', namespace='airline')),
 
     url(r'^api/parser/', include('madeasy.parser.urls', namespace='parser')),
+    url(r'^me/$', MeView.as_view(), name='me'),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

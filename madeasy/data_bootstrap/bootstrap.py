@@ -127,12 +127,13 @@ def _process_model_spec(model_spec):
 
     # Instantiate and bulk create
     # Looks like hieroglyphics...performance optimization with measurable gains
+
     model_obj_generator = (
         _instantiate_model_cls(
             model_cls,
             {
-                field if model_cls._meta.get_field(field).get_internal_type() not in ["ForeignKey", "OneToOneField"] else field + '_id':  # NOQA
-                record[field] if model_cls._meta.get_field(field).get_internal_type() not in ["ForeignKey", "OneToOneField"] else record[field]['id']  # NOQA
+                field if model_cls._meta.get_field(field).get_internal_type() not in ["ForeignKey", "OneToOneField", "TreeForeignKey"] else field + '_id':  # NOQA
+                record[field] if model_cls._meta.get_field(field).get_internal_type() not in ["ForeignKey", "OneToOneField", "TreeForeignKey"] else record[field]['id']  # NOQA
                 for field in record.keys()
             }
         )
