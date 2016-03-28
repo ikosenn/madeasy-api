@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
+
 from mptt.models import MPTTModel, TreeForeignKey
 
 from madeasy.common.models import AbstractBase
@@ -44,7 +46,7 @@ class Airline(AbstractBase):
     active = models.CharField(max_length=1, null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return self.airline_name
 
 
 class Airplane(AbstractBase):
@@ -117,9 +119,15 @@ class Route(AbstractBase):
         max_length=1, null=True,
         help_text=('A flight is a codeshare if not operated by Airline,'
                    'but another carrier'))
-    equipment = models.CharField(
-        max_length=3, help_text='3-letter codes for plane type')
+    equipment = ArrayField(
+        models.CharField(
+            max_length=3, help_text='3-letter codes for plane type'))
     stops = models.IntegerField()
+
+    def __str__(self):
+        return self.airline_name + ' ' + \
+            self.source_airport.airport_name + \
+            "->" + self.destination_airport.airport_name
 
 
 class RouteTree(MPTTModel, AbstractBase):
@@ -130,3 +138,7 @@ class RouteTree(MPTTModel, AbstractBase):
     airport = models.ForeignKey(Airport)
     parent = TreeForeignKey(
         'self', null=True, blank=True, related_name='children', db_index=True)
+
+    def __str__(self):
+        return self.airline.airline_name + ' ' + self.airport.airport_name + \
+            "(" + self.airport.iata + ")"

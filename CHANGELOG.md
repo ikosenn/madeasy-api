@@ -44,3 +44,10 @@ CHANGELOG
 
 ### Changed
 - The Airline and Airport models
+
+
+## 0.0.10 - 2016-03-27
+### Added
+- Default data for the application, RouteTree
+- Me endpoint for user details
+-

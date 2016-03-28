@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-
+from rest_framework.generics import RetrieveUpdateAPIView
 from .models import (
     User,
     UserProfile,
@@ -29,3 +29,12 @@ class OauthApplicationViewSet(viewsets.ModelViewSet):
 
     queryset = OauthApplication.objects.all()
     serializer_class = OauthApplicationSerializer
+
+
+class MeView(RetrieveUpdateAPIView):
+
+    queryset = None
+    serializer_class = UserSerializer
+
+    def get_object(self):
+        return self.request.user

@@ -1,0 +1,23 @@
+[
+    {
+        "records": [
+            {
+                "redirect_uris": "http://localhost:8030/",
+                "user": {
+                    "id": "d95da350-4475-419b-8b67-5acbe3622613"
+                },
+                "client_secret": "madeasyapp@siri",
+                "name": "Madeasy",
+                "authorization_grant_type": "password",
+                "client_id": "madeasyapp224",
+                "id": 1,
+                "skip_authorization": false,
+                "client_type": "confidential"
+            }
+        ],
+        "model": "madeasy_auth.OauthApplication",
+        "unique_fields": [
+            "id"
+        ]
+    }
+]
