@@ -50,4 +50,10 @@ CHANGELOG
 ### Added
 - Default data for the application, RouteTree
 - Me endpoint for user details
--
+
+
+## 0.0.11 - 2016-04-25
+### Added
+- Add QPX Express API
+- Remove default data for routes
+- Add City lookup

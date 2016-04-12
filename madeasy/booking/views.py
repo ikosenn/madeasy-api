@@ -4,12 +4,14 @@ from .models import (
     TicketType,
     BookingStatus,
     Booking,
+    FlightDetails,
 )
 
 from .serializers import (
     TicketTypeSerializer,
     BookingStatusSerializer,
     BookingSerializer,
+    FlightDetailsSerializer
 )
 
 
@@ -29,3 +31,9 @@ class BookingViewSet(viewsets.ModelViewSet):
 
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
+
+
+class FlightDetailsViewSet(viewsets.ModelViewSet):
+
+    queryset = FlightDetails.objects.all()
+    serializer_class = FlightDetailsSerializer

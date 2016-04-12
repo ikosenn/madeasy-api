@@ -8,7 +8,8 @@ from .views import (
     FlightViewSet,
     TravelClassSeatCapacityViewSet,
     RouteTreeViewSet,
-    RouteViewSet
+    RouteViewSet,
+    CityLookupViewSet,
 )
 
 
@@ -21,6 +22,7 @@ router.register(r'flights', FlightViewSet)
 router.register(r'flights', FlightViewSet)
 router.register(r'routes', RouteViewSet)
 router.register(r'route_trees', RouteTreeViewSet)
+router.register(r'city_lookup', CityLookupViewSet)
 router.register(
     r'travel_class_seat_capacities', TravelClassSeatCapacityViewSet)
 

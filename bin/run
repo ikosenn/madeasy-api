@@ -26,7 +26,7 @@ def _manage(command, args=''):
     _fail_loudly(p)
 
 
-def _psql(query, no_sudo=False, is_file=False):
+def _psql(query, no_sudo=False, is_file=False, postgresdb=False):
     """
     Dev only - used by the setup function below
     """
@@ -34,10 +34,15 @@ def _psql(query, no_sudo=False, is_file=False):
     if no_sudo:
         sudo = ''
 
+    dbflag = ''
+
+    if postgresdb:
+        dbflag = '-d postgres'
+
     if is_file:
-        p = run('{} psql < {}'.format(sudo, query))
+        p = run('{} psql {} < {}'.format(sudo, dbflag, query))
     else:
-        p = run('{} psql -c "{}"'.format(sudo, query))
+        p = run('{} psql {} -c "{}"'.format(sudo, dbflag, query))
 
     _fail_loudly(p)
 
@@ -63,12 +68,12 @@ def test_with_clean_db(*args, **kwargs):
 
 
 @click.command()
-def reset(*args, **kwargs):
+@click.pass_context
+def reset(ctx):
     """
     Drop and recreate the DB but do not load data. Migrations should run
     """
-    no_sudo = True if 'no-sudo' in args else False
-
+    no_sudo = ctx.obj['NO_SUDO']
     db_name = settings.DATABASES.get('default').get('NAME')
     db_user = settings.DATABASES.get('default').get('USER')
     db_pass = settings.DATABASES.get('default').get('PASSWORD')
@@ -85,10 +90,13 @@ def reset(*args, **kwargs):
 
 @click.group(chain=True, invoke_without_command=True)
 @click.pass_context
-def setup(ctx):
+@click.option(
+    '--no_sudo', required=False, default=True, help='Access to psql via sudo')
+def setup(ctx, no_sudo):
     """
     Delete the development database, recreate it, load data
     """
+    ctx.obj['NO_SUDO'] = no_sudo
     ctx.invoke(reset)
     ctx.invoke(load)
 
@@ -139,4 +147,4 @@ cli.add_command(deploy)
 
 
 if __name__ == '__main__':
-    cli()
+    cli(obj={})
