@@ -4,6 +4,7 @@ from madeasy.booking.models import (
     TicketType,
     BookingStatus,
     Booking,
+    FlightDetails
 )
 
 
@@ -20,3 +21,8 @@ class BookingStatusSerializer(AuditFieldsMixin):
 class BookingSerializer(AuditFieldsMixin):
     class Meta:
         model = Booking
+
+
+class FlightDetailsSerializer(AuditFieldsMixin):
+    class Meta:
+        model = FlightDetails

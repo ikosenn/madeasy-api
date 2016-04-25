@@ -6,6 +6,16 @@ from mptt.models import MPTTModel, TreeForeignKey
 from madeasy.common.models import AbstractBase
 
 
+class CityLookup(AbstractBase):
+    """
+    Cities and their iata codes. This helps during lookup for cities
+    to get flight details
+    """
+    city = models.CharField(max_length=255)
+    city_code = models.CharField(max_length=3)
+    airport_code = models.CharField(max_length=3)
+
+
 class Airport(AbstractBase):
     """
     This detail the location of an airport. This is either

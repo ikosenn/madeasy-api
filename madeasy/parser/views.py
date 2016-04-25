@@ -26,11 +26,9 @@ class ParserView(APIView):
                 parser_model = parser_mm.model_from_str(query)
                 parser_obj = Parser()
                 parser_obj.interpret(parser_model)
-                if parser_obj.errors:
-                    # This are errors obtained when parsing a valid query
-                    errors = parser_obj.errors
-                    return Response(errors, status=status.HTTP_400_BAD_REQUEST)
-                return Response(serializer.data)
+                if parser_obj.success_data:
+                    return Response(
+                        parser_obj.success_data, status=status.HTTP_200_OK)
             except TextXSyntaxError:
                 error = {
                     'detail': ('The query was not properly formatted.'

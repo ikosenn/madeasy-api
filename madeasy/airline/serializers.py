@@ -8,7 +8,8 @@ from madeasy.airline.models import (
     TravelClassSeatCapacity,
     Airport,
     Route,
-    RouteTree
+    RouteTree,
+    CityLookup
 )
 
 
@@ -50,3 +51,8 @@ class RouteSerializer(AuditFieldsMixin):
 class RouteTreeSerializer(AuditFieldsMixin):
     class Meta:
         model = RouteTree
+
+
+class CityLookupSerializer(AuditFieldsMixin):
+    class Meta:
+        model = CityLookup

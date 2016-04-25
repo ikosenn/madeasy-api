@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from jsonfield import JSONField
 
 from madeasy.airline.models import (
     TravelClass,
@@ -51,3 +52,11 @@ class Booking(AbstractBase):
 
     def __str__(self):
         return " - ".join([self.fligt.flight_number, self.booking_status.name])
+
+
+class FlightDetails(AbstractBase):
+    passenger = models.ForeignKey(settings.AUTH_USER_MODEL)
+    flight_details = JSONField()
+
+    def __str__(self):
+        self.passenger.first_name

@@ -96,6 +96,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'mptt',
+    'jsonfield',
     # 'rest_auth',
     'madeasy.data_bootstrap',
     'madeasy.common',
@@ -181,11 +182,11 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.AdminRenderer',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
         'oauth2_provider.ext.rest_framework.OAuth2Authentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',
     ),
 
     # Pagination settings
@@ -295,7 +296,7 @@ LOGGING = {
         },
     }}
 
-
+QPX_API_KEY = 'AIzaSyDr1JT7khhZaDGaPh6CzJEAvnVCWlv6MdE'
 # add HSTS on the backend requests for a dynamic
 # period of 1 year on all project subdomains
 SECURE_HSTS_SECONDS = 31536000

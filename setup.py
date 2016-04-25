@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 name = 'madeasy-api'
-version = '0.0.10'
+version = '0.0.11'
 
 
 setup(
@@ -35,6 +35,7 @@ setup(
         'textX==0.4.2',
         'python-dateutil==2.5.0',
         'django-mptt==0.8.3',
+        'jsonfield==1.0.3'
 
     ],
     scripts=[
