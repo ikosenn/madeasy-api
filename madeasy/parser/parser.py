@@ -5,7 +5,7 @@ from rest_framework.serializers import ValidationError
 from madeasy.parser.serializers import BookCommandSerializer
 from madeasy.common.utility import convert_to_iso_date
 
-from madeasy.parser.qpx import QPX_REQUEST_PAYLOAD, make_request
+from madeasy.parser.qpx import QPX_REQUEST_PAYLOAD, get_flight_details
 from madeasy.airline.models import CityLookup
 
 
@@ -43,7 +43,6 @@ class Book(object):
         """
         Search qpx for details regarding a flight
         """
-        response = []
         destination_airports = CityLookup.objects.filter(
             Q(city_code=self.country_arrive) | Q(city=self.country_arrive) |
             Q(airport_code=self.country_arrive))
@@ -61,9 +60,10 @@ class Book(object):
                 "date": self.date_departure,
             }
             payload['request']['slice'].append(temp)
-            res = make_request(payload)
-            response.append(res)
-            self.success_data = res.json()
+            res = get_flight_details(
+                payload, source_airports[0].city, destination_airports[0].city,
+                source_airports[0].id, destination_airports[0].id)
+            self.success_data = res
         else:
             raise ValidationError({
                 'city': _("The departure or the arrival destinations are wrong"

@@ -1,11 +1,8 @@
 from django.db import models
+from django.utils import timezone
 from django.conf import settings
-from jsonfield import JSONField
 
-from madeasy.airline.models import (
-    TravelClass,
-    Flight,
-)
+from madeasy.airline.models import Flight
 
 from madeasy.common.models import AbstractBase
 
@@ -15,48 +12,18 @@ BOOKING_STATUS = (
 )
 
 
-class TicketType(AbstractBase):
-    """
-    What a passenger uses to identify their booking
-    and succesful payment
-    """
-
-    ticket_code = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.ticket_code
-
-
-class BookingStatus(AbstractBase):
-    """
-    The status that a particular booking can belong to
-    """
-
-    name = models.CharField(max_length=50, choices=BOOKING_STATUS)
-
-    def __str__(self):
-        return self.name
-
-
 class Booking(AbstractBase):
     """
     Stores the booking of a particular class
     """
 
-    booking_date = models.DateTimeField()
+    booking_date = models.DateTimeField(default=timezone.now)
     passenger = models.ForeignKey(settings.AUTH_USER_MODEL)
-    booking_status = models.ForeignKey(BookingStatus)
-    ticket_type = models.ForeignKey(TicketType)
+    booking_status = models.CharField(
+        max_length=50, choices=BOOKING_STATUS, default='PENDING')
     flight = models.ForeignKey(Flight)
-    travel_class = models.ForeignKey(TravelClass)
 
     def __str__(self):
-        return " - ".join([self.fligt.flight_number, self.booking_status.name])
-
-
-class FlightDetails(AbstractBase):
-    passenger = models.ForeignKey(settings.AUTH_USER_MODEL)
-    flight_details = JSONField()
-
-    def __str__(self):
-        self.passenger.first_name
+        return " - ".join([
+            self.flight.flight_number, self.booking_status.name
+        ])

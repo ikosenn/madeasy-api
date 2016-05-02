@@ -1,39 +1,11 @@
 from rest_framework import viewsets
 
-from .models import (
-    TicketType,
-    BookingStatus,
-    Booking,
-    FlightDetails,
-)
+from .models import Booking
 
-from .serializers import (
-    TicketTypeSerializer,
-    BookingStatusSerializer,
-    BookingSerializer,
-    FlightDetailsSerializer
-)
-
-
-class TicketTypeViewSet(viewsets.ModelViewSet):
-
-    queryset = TicketType.objects.all()
-    serializer_class = TicketTypeSerializer
-
-
-class BookingStatusViewSet(viewsets.ModelViewSet):
-
-    queryset = BookingStatus.objects.all()
-    serializer_class = BookingStatusSerializer
+from .serializers import BookingSerializer
 
 
 class BookingViewSet(viewsets.ModelViewSet):
 
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
-
-
-class FlightDetailsViewSet(viewsets.ModelViewSet):
-
-    queryset = FlightDetails.objects.all()
-    serializer_class = FlightDetailsSerializer
