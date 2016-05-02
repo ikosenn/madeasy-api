@@ -15,6 +15,9 @@ class CityLookup(AbstractBase):
     city_code = models.CharField(max_length=3)
     airport_code = models.CharField(max_length=3)
 
+    def __str__(self):
+        return self.city
+
 
 class Airport(AbstractBase):
     """
@@ -59,61 +62,37 @@ class Airline(AbstractBase):
         return self.airline_name
 
 
-class Airplane(AbstractBase):
+class Trip(AbstractBase):
     """
-    The actual aircraft
+    Details about a trip from a departure airport to an arival airport
     """
-
-    aircraft_type = models.CharField(max_length=255)
-    airline = models.ForeignKey(Airline)
+    origin = models.ForeignKey(CityLookup, related_name='trip_origin')
+    destination = models.ForeignKey(
+        CityLookup, related_name='trip_destination')
+    price = models.CharField(max_length=50, default='KES0')
 
     def __str__(self):
-        return self.aircraft_type
-
-
-class TravelClass(AbstractBase):
-    """
-    The travel class of the seat
-    """
-
-    travel_class_code = models.CharField(max_length=50)
-    travel_class_name = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.travel_class_name
+        return "-".join([
+            self.origin.airline_name, self.destination.airline_name
+        ])
 
 
 class Flight(AbstractBase):
     """
-    This are the details partaining to a single journey.
-    e.g. Moving from JKIA to Amsterdam
+    A trip can have one or more flights based on how many segments
+    constitute a trip.
     """
 
-    airplane = models.ForeignKey(Airplane)
+    airline = models.ForeignKey(Airline)
+    trip = models.ForeignKey(Trip)
     flight_number = models.CharField(max_length=50)
-    origin = models.ForeignKey(Airport, related_name='origin')
-    destination = models.ForeignKey(Airport, related_name='destination')
+    origin = models.ForeignKey(Airport, related_name='flight_origin')
+    destination = models.ForeignKey(Airport, related_name='flight_destination')
     departure_time = models.DateTimeField()
     arrival_time = models.DateTimeField()
-    travel_class = models.ManyToManyField(
-        TravelClass, through='TravelClassSeatCapacity')
 
     def __str__(self):
         return self.flight_number
-
-
-class TravelClassSeatCapacity(AbstractBase):
-    """
-    Through table between a travel class and a flight
-    """
-
-    flight = models.ForeignKey(Flight)
-    travel_class = models.ForeignKey(TravelClass)
-    seat_capacity = models.IntegerField()
-    seat_price = models.FloatField()
-
-    def __str__(self):
-        return self.seat_capacity
 
 
 class Route(AbstractBase):

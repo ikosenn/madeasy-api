@@ -7,7 +7,7 @@ Command:
 ;
 
 BookCommand:
-    'book a flight to' country_arrive=Country 'from' country_departure=Country 'on' date_leave=Date ('to' date_return=Date)?
+    'show me flights to' country_arrive=Country 'from' country_departure=Country 'on' date_leave=Date ('to' date_return=Date)?
 ;
 
 

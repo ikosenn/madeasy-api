@@ -86,7 +86,6 @@ CORS_ORIGIN_REGEX_WHITELIST = (
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -96,7 +95,6 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'mptt',
-    'jsonfield',
     # 'rest_auth',
     'madeasy.data_bootstrap',
     'madeasy.common',
@@ -173,23 +171,24 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PARSER_CLASSES': (
         'rest_framework.parsers.JSONParser',
-        'rest_framework.parsers.FormParser',
         'rest_framework.parsers.MultiPartParser',
+        'rest_framework.parsers.FormParser',
     ),
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.BrowsableAPIRenderer',
         'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.AdminRenderer',
+        'rest_framework.renderers.AdminRenderer'
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        # 'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
         'oauth2_provider.ext.rest_framework.OAuth2Authentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.IsAuthenticated',
     ),
-
-    # Pagination settings
+    'DEFAULT_METADATA_CLASS': (
+        'rest_framework.metadata.SimpleMetadata',
+    ),
     'PAGE_SIZE': 30,
     'PAGINATE_BY_PARAM': 'page_size',
     'MAX_PAGINATE_BY': 15000,
@@ -197,7 +196,7 @@ REST_FRAMEWORK = {
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
     'TEST_REQUEST_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.MultiPartRenderer',
+        'rest_framework.renderers.MultiPartRenderer'
     ),
 
     'DATETIME_FORMAT': 'iso-8601',
@@ -299,16 +298,16 @@ LOGGING = {
 QPX_API_KEY = 'AIzaSyDr1JT7khhZaDGaPh6CzJEAvnVCWlv6MdE'
 # add HSTS on the backend requests for a dynamic
 # period of 1 year on all project subdomains
-SECURE_HSTS_SECONDS = 31536000
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-
-if os.getenv('HTTPS_ENABLED'):
-    CSRF_COOKIE_SECURE = True
-    SESSION_COOKIE_SECURE = True
-
-
-CSRF_COOKIE_AGE = None
-CSRF_COOKIE_HTTPONLY = True
-SESSION_COOKIE_HTTPONLY = True
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-SECURE_BROWSER_XSS_FILTER = True
+# SECURE_HSTS_SECONDS = 31536000
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+#
+# if os.getenv('HTTPS_ENABLED'):
+#     CSRF_COOKIE_SECURE = True
+#     SESSION_COOKIE_SECURE = True
+#
+#
+# CSRF_COOKIE_AGE = None
+# CSRF_COOKIE_HTTPONLY = True
+# SESSION_COOKIE_HTTPONLY = True
+# SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+# SECURE_BROWSER_XSS_FILTER = True

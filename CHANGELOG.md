@@ -57,3 +57,12 @@ CHANGELOG
 - Add QPX Express API
 - Remove default data for routes
 - Add City lookup
+
+
+## 0.0.11 - 2016-05-02
+### Added
+- A user can book a flight
+- Fix form CSRF and parsing errors
+
+### Removes
+- Models in Airline and Booking app

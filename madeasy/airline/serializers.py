@@ -1,15 +1,13 @@
 from madeasy.common.serializers import AuditFieldsMixin
 
 from madeasy.airline.models import (
-    Airline,
-    Airplane,
-    TravelClass,
-    Flight,
-    TravelClassSeatCapacity,
+    CityLookup,
     Airport,
+    Airline,
+    Flight,
     Route,
     RouteTree,
-    CityLookup
+    Trip,
 )
 
 
@@ -23,24 +21,9 @@ class AirlineSerializer(AuditFieldsMixin):
         model = Airline
 
 
-class AirplaneSerializer(AuditFieldsMixin):
-    class Meta:
-        model = Airplane
-
-
-class TravelClassSerializer(AuditFieldsMixin):
-    class Meta:
-        model = TravelClass
-
-
 class FlightSerializer(AuditFieldsMixin):
     class Meta:
         model = Flight
-
-
-class TravelClassSeatCapacitySerializer(AuditFieldsMixin):
-    class Meta:
-        model = TravelClassSeatCapacity
 
 
 class RouteSerializer(AuditFieldsMixin):
@@ -56,3 +39,8 @@ class RouteTreeSerializer(AuditFieldsMixin):
 class CityLookupSerializer(AuditFieldsMixin):
     class Meta:
         model = CityLookup
+
+
+class TripSerializer(AuditFieldsMixin):
+    class Meta:
+        model = Trip
