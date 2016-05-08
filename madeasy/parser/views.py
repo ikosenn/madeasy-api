@@ -27,6 +27,9 @@ class ParserView(APIView):
         start_time = datetime.datetime.now()
         serializer = ParserSerializer(data=request.data)
         parser_results = ParserResults()
+        query_raw = request.data.get('query', '')
+        parser_results.query_raw = query_raw
+        parser_results.save()
         if serializer.is_valid():
             query = serializer.data.get('query')
             parser_results.query = query
@@ -39,6 +42,7 @@ class ParserView(APIView):
                     stop_time = datetime.datetime.now()
                     total_seconds = (stop_time - start_time).total_seconds()
                     parser_results.response_time = total_seconds
+                    parser_results.is_correct = True
                     parser_results.save()
                     return Response(
                         parser_obj.success_data, status=status.HTTP_200_OK)
@@ -46,7 +50,6 @@ class ParserView(APIView):
                 error = {
                     'detail': ('The query was not properly formatted.'
                                ' Kindly see below for examples')}
-        parser_results.is_correct = False
         parser_results.save()
         return Response(error, status=status.HTTP_400_BAD_REQUEST)
 
@@ -69,7 +72,7 @@ class ParserResultsViewSet(viewsets.ModelViewSet):
 
     @list_route(methods=['get'])
     def parser_response_day(self, request):
-        response = ParserResults.objects.extra({
+        response = ParserResults.objects.filter(is_correct=True).extra({
             'created': 'date(created)'
         }).values('created').annotate(average_res_time=Avg('response_time'))
 

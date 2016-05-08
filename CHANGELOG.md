@@ -59,7 +59,7 @@ CHANGELOG
 - Add City lookup
 
 
-## 0.0.11 - 2016-05-02
+## 0.0.12 - 2016-05-02
 ### Added
 - A user can book a flight
 - Fix form CSRF and parsing errors
@@ -68,6 +68,10 @@ CHANGELOG
 - Models in Airline and Booking app
 
 
-## 0.0.12 - 2016-05-08
+## 0.0.13 - 2016-05-08
 - Resets migrations
 - Add parser endpoints for graph generation
+
+
+## 0.0.14 - 2016-05-08
+- Bug fixes: Parser correctness
