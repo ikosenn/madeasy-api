@@ -71,7 +71,7 @@ application from default data. This is irreversible.",
               prompt="If you are deploying to a new server or want to \
 rebuild the application's database from default data, \
               please respond [y], otherwise [n]",
-              default=True)
+              default=False)
 @click.option('--ssl-on', help="Turn on ssl.",
               is_flag=True,
               prompt="Would you like to turn on SSL? This only changes \
