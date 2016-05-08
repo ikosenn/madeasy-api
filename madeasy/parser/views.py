@@ -1,7 +1,12 @@
+import datetime
+
+from django.db.models import Avg
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import viewsets
+from rest_framework.decorators import list_route
+
 
 from textx.exceptions import TextXSyntaxError
 from madeasy.parser import parser_mm
@@ -19,21 +24,30 @@ class ParserView(APIView):
     """
 
     def post(self, request, *args, **kwargs):
+        start_time = datetime.datetime.now()
         serializer = ParserSerializer(data=request.data)
+        parser_results = ParserResults()
         if serializer.is_valid():
             query = serializer.data.get('query')
+            parser_results.query = query
             try:
                 parser_model = parser_mm.model_from_str(query)
                 parser_obj = Parser()
                 parser_obj.interpret(parser_model)
+                parser_results.command_executed = parser_obj.command_executed
                 if parser_obj.success_data:
+                    stop_time = datetime.datetime.now()
+                    total_seconds = (stop_time - start_time).total_seconds()
+                    parser_results.response_time = total_seconds
+                    parser_results.save()
                     return Response(
                         parser_obj.success_data, status=status.HTTP_200_OK)
             except TextXSyntaxError:
                 error = {
                     'detail': ('The query was not properly formatted.'
                                ' Kindly see below for examples')}
-
+        parser_results.is_correct = False
+        parser_results.save()
         return Response(error, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -41,3 +55,22 @@ class ParserResultsViewSet(viewsets.ModelViewSet):
 
     queryset = ParserResults.objects.all()
     serializer_class = ParserResultsSerializer
+
+    @list_route(methods=['get'])
+    def parser_correctness(self, request):
+        pos = ParserResults.objects.filter(is_correct=True)
+        neg = ParserResults.objects.filter(is_correct=False)
+
+        parser_correctness = {
+            "positive": pos.count(),
+            "negative": neg.count()
+        }
+        return Response(parser_correctness, status=status.HTTP_200_OK)
+
+    @list_route(methods=['get'])
+    def parser_response_day(self, request):
+        response = ParserResults.objects.extra({
+            'created': 'date(created)'
+        }).values('created').annotate(average_res_time=Avg('response_time'))
+
+        return Response(response, status=status.HTTP_200_OK)

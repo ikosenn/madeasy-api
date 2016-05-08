@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 name = 'madeasy-api'
-version = '0.0.12'
+version = '0.0.13'
 
 
 setup(
@@ -36,6 +36,7 @@ setup(
         'python-dateutil==2.5.0',
         'django-mptt==0.8.3',
         'django-rest-auth==0.7.0',
+        'requests==2.10.0',
     ],
     scripts=[
         'bin/madeasy_manage',
