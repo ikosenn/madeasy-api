@@ -3,13 +3,16 @@ Program:
 ;
 
 Command:
-    BookCommand // | SearchCommand | ShowCommand
+    BookCommand | ShowCommand // | SearchCommand
 ;
 
 BookCommand:
     'show me flights to' country_arrive=Country 'from' country_departure=Country 'on' date_leave=Date ('to' date_return=Date)?
 ;
 
+ShowCommand:
+    'show me my booked flights'
+;
 
 Country:
     /[a-zA-Z]+/

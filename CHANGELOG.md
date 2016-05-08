@@ -66,3 +66,8 @@ CHANGELOG
 
 ### Removes
 - Models in Airline and Booking app
+
+
+## 0.0.12 - 2016-05-08
+- Resets migrations
+- Add parser endpoints for graph generation

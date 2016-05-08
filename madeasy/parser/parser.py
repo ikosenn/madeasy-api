@@ -71,14 +71,29 @@ class Book(object):
                           "check and it must much an exact city")})
 
 
-class Parser(Book):
+class ShowBooked(object):
+    """
+    Executed to retrieve all the booked fights of a particular user
+    """
+
+    def _get_booked_flights(self):
+        """
+        Search qpx for details regarding a flight
+        """
+
+        pass
+
+
+class Parser(Book, ShowBooked):
     def __init__(self):
         self.errors = None
+        self.command_executed = None
 
     def interpret(self, model):
         # model is an instance of Program
         for c in model.commands:
             if c.__class__.__name__ == "BookCommand":
+                self.command_executed = "BookCommand"
                 parsed_vars = {
                     'country_arrive': c.country_arrive,
                     'country_departure': c.country_departure,
@@ -94,3 +109,6 @@ class Parser(Book):
                 if self.errors:
                     raise ValidationError(self.errors)
                 self._search_book_command()
+            elif c.__class__.__name__ == "ShowCommand":
+                self.command_executed = "ShowCommand"
+                self._get_booked_flights()
