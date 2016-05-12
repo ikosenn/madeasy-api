@@ -11,7 +11,8 @@ class UserManager(BaseUserManager):
     A custom user manager for emr
     """
     def create_user(
-            self, first_name=None, last_name=None, email=None, password=None):
+            self, first_name=None, last_name=None, email=None, password=None,
+            **extra_fields):
         """
         Creates and saves a User with the given email, date of
         birth and password.
@@ -22,7 +23,7 @@ class UserManager(BaseUserManager):
 
         user = self.model(
             first_name=first_name, last_name=last_name,
-            email=self.normalize_email(email))
+            email=self.normalize_email(email), **extra_fields)
 
         user.set_password(password)
         user.save(using=self._db)
