@@ -133,6 +133,7 @@
 
 - name: load bootstrap data
   shell: ". {{install_dir}}/env.sh && {{ django_manage }} bootstrap '{{venv_dir}}/lib/python3.4/site-packages/madeasy/data/*/*.json'"
+  when: setup_new_db
   tags: madeasyapi
 
 - name: make static directory

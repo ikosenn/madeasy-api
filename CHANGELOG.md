@@ -75,3 +75,6 @@ CHANGELOG
 
 ## 0.0.14 - 2016-05-08
 - Bug fixes: Parser correctness
+
+## 0.0.15 - 2016-05-08
+- Overide user serializer to allow new users to be created:
