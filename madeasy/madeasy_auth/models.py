@@ -70,6 +70,10 @@ class User(AbstractBase, AbstractBaseUser):
     def __str__(self):
         return self.email
 
+    @property
+    def my_flights(self):
+        return self.booking_set.all()
+
 
 class UserProfile(AbstractBase):
     """

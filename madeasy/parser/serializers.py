@@ -31,6 +31,7 @@ class BookCommandSerializer(serializers.Serializer):
     country_departure = serializers.CharField()
     date_departure = serializers.DateField()
     date_return = serializers.DateField(required=False)
+    price = serializers.FloatField(required=False, min_value=0)
 
     def validate(self, data):
         """

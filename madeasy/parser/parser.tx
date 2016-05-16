@@ -1,23 +1,28 @@
 Program:
-    commands*=Command
+    commands+=Command
 ;
 
 Command:
-    BookCommand | ShowCommand // | SearchCommand
+    BookCommand | ShowCommand
 ;
 
 BookCommand:
-    'show me flights to' country_arrive=Country 'from' country_departure=Country 'on' date_leave=Date ('to' date_return=Date)?
+    'show me flights from' country_departure=Country 'to' country_arrive=Country 'on' date_departure=Date ('to' date_return=Date)? ('with a maximum price of' price=Price)?
 ;
 
 ShowCommand:
-    'show me my booked flights'
+    command_value='show my booked flights'
 ;
 
 Country:
-    /[a-zA-Z]+/
+    /([a-zA-z\s](?!to\s|on\s))+/
 ;
 
 Date:
-    /(0[1-9]|[12][0-9]|3[01])([-\/.])(0[1-9]|1[012])\2(19|20)\d\d/
+    /(0?[1-9]|[12][0-9]|3[01])([-\/.])(0?[1-9]|1[012])\2(19|20)\d\d|(\d+(st|nd|rd|th))[\s]+[a-zA-z]*?[\s]+(19|20)\d\d/
+;
+
+
+Price:
+    /\d+(\.\d+)?/
 ;

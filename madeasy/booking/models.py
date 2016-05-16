@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.conf import settings
 
-from madeasy.airline.models import Flight
+from madeasy.airline.models import Trip
 
 from madeasy.common.models import AbstractBase
 
@@ -21,7 +21,7 @@ class Booking(AbstractBase):
     passenger = models.ForeignKey(settings.AUTH_USER_MODEL)
     booking_status = models.CharField(
         max_length=50, choices=BOOKING_STATUS, default='PENDING')
-    flight = models.ForeignKey(Flight)
+    trip = models.ForeignKey(Trip)
 
     def __str__(self):
         return " - ".join([
