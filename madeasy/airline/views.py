@@ -81,6 +81,7 @@ class TripViewSet(viewsets.ModelViewSet):
             dest = CityLookup.objects.get(id=destination_id)
             trip = Trip.objects.create(
                 origin=origin, destination=dest, price=price)
+            Booking.objects.create(passenger=user, trip=trip)
             for segment in segments:
                 flight_number = segment['flight_number']
                 start_time = segment['start_time']
@@ -91,15 +92,14 @@ class TripViewSet(viewsets.ModelViewSet):
                     iata=segment['stop_airport'])
                 airline = Airline.objects.get(iata=segment['airline'])
 
-                flight = Flight.objects.create(
+                Flight.objects.create(
                     airline=airline, trip=trip, flight_number=flight_number,
                     origin=start_airport, destination=stop_airport,
                     departure_time=start_time, arrival_time=stop_time
                 )
-                Booking.objects.create(passenger=user, flight=flight)
-                serializer = TripSerializer(trip)
-                return Response(
-                    serializer.data, status=status.HTTP_201_CREATED)
+            serializer = TripSerializer(trip)
+            return Response(
+                serializer.data, status=status.HTTP_201_CREATED)
         else:
             raise ValidationError({
                 'flight_details': 'You must submit valid flight details'

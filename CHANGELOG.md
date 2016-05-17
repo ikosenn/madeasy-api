@@ -77,4 +77,8 @@ CHANGELOG
 - Bug fixes: Parser correctness
 
 ## 0.0.15 - 2016-05-08
-- Overide user serializer to allow new users to be created:
+- Overide user serializer to allow new users to be created
+
+## 0.0.16 - 2016-05-17
+- Add show my booked flights command
+- Edit book command to allow search by price and to specify a return date

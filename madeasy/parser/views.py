@@ -35,7 +35,7 @@ class ParserView(APIView):
             parser_results.query = query
             try:
                 parser_model = parser_mm.model_from_str(query)
-                parser_obj = Parser()
+                parser_obj = Parser(request.user)
                 parser_obj.interpret(parser_model)
                 parser_results.command_executed = parser_obj.command_executed
                 if parser_obj.success_data:
@@ -50,8 +50,11 @@ class ParserView(APIView):
                 error = {
                     'detail': ('The query was not properly formatted.'
                                ' Kindly see below for examples')}
+                parser_results.save()
+                return Response(error, status=status.HTTP_400_BAD_REQUEST)
         parser_results.save()
-        return Response(error, status=status.HTTP_400_BAD_REQUEST)
+        print(request.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ParserResultsViewSet(viewsets.ModelViewSet):

@@ -7,6 +7,7 @@ from madeasy.madeasy_auth.models import (
 
 
 class UserSerializer(AuditFieldsMixin):
+
     class Meta:
         model = User
         read_only_fields = ('last_login',)

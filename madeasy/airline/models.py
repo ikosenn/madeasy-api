@@ -73,7 +73,7 @@ class Trip(AbstractBase):
 
     def __str__(self):
         return "-".join([
-            self.origin.airline_name, self.destination.airline_name
+            self.origin.city, self.destination.city
         ])
 
 
