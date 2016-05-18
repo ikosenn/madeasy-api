@@ -2,6 +2,8 @@ from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
+
 from oauth2_provider.models import AbstractApplication
 from madeasy.common.models import AbstractBase
 
@@ -61,6 +63,7 @@ class User(AbstractBase, AbstractBaseUser):
     is_staff = models.BooleanField(default=False)
 
     is_active = models.BooleanField(default=True)
+    actions = ArrayField(models.CharField(max_length=100), null=True)
 
     objects = UserManager()
 
