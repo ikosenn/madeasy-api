@@ -77,6 +77,9 @@ class User(AbstractBase, AbstractBaseUser):
     def my_flights(self):
         return self.booking_set.all()
 
+    def full_name(self):
+        return " ".join([self.first_name, self.last_name])
+
 
 class UserProfile(AbstractBase):
     """

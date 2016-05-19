@@ -85,3 +85,7 @@ CHANGELOG
 
 ## 0.0.16 - 2016-05-18
 - Add actions parameter to the user fields
+
+## 0.0.17 - 2016-05-20
+- Add command for adults
+- Special endpoints for parser results

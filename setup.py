@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 name = 'madeasy-api'
-version = '0.0.17'
+version = '0.0.18'
 
 
 setup(

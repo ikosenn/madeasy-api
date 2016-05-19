@@ -37,6 +37,7 @@ class Book(object):
             self.date_departure = data.get('date_departure')
             self.date_return = data.get('date_return')
             self.price = data.get('price')
+            self.adult_count = data.get('adult_count')
         else:
             self.errors = serializer.errors
 
@@ -72,6 +73,9 @@ class Book(object):
                 payload['request']['slice'].append(temp)
             if self.price:
                 payload['request']['maxPrice'] = 'USD' + str(self.price)
+
+            if self.adult_count:
+                payload['request']['passengers']['adultCount'] = self.adult_count  # noqa
             res = get_flight_details(
                 payload, source_airports[0].city, destination_airports[0].city,
                 source_airports[0].id, destination_airports[0].id)
@@ -142,6 +146,9 @@ class Parser(Book, ShowBooked):
                 # add price if its provided
                 if c.price:
                     parsed_vars['price'] = c.price
+                # add adult count
+                if c.adult_count:
+                    parsed_vars['adult_count'] = c.adult_count
                 # validate the data
                 self._validate_book_command(parsed_vars)
                 if self.errors:
