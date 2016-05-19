@@ -18,11 +18,3 @@ class ParserResults(AbstractBase):
         max_digits=10)
     is_correct = models.BooleanField(default=False)
     command_executed = models.CharField(max_length=50, default="Unkwown")
-
-
-"""
-parser reponse times
-parser average response times on different commands
-Parser correctness vs uncorrectnetss
-"different commands frequency"
-"""

@@ -17,6 +17,7 @@ class ParserSerializer(serializers.Serializer):
 
 
 class ParserResultsSerializer(AuditFieldsMixin):
+    user_created_name = serializers.ReadOnlyField()
 
     class Meta:
         model = ParserResults
@@ -32,6 +33,7 @@ class BookCommandSerializer(serializers.Serializer):
     date_departure = serializers.DateField()
     date_return = serializers.DateField(required=False)
     price = serializers.FloatField(required=False, min_value=0)
+    adult_count = serializers.IntegerField(required=False, min_value=0)
 
     def validate(self, data):
         """

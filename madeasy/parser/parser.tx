@@ -7,7 +7,10 @@ Command:
 ;
 
 BookCommand:
-    'show me flights from' country_departure=Country 'to' country_arrive=Country 'on' date_departure=Date ('to' date_return=Date)? ('with a maximum price of' price=Price)?
+    'show me flights from' country_departure=Country 'to'
+    country_arrive=Country 'on' date_departure=Date
+    ('to' date_return=Date)? ('with a maximum price of' price=Price)?
+    ('with'|'and' adult_count=INT 'adults')?
 ;
 
 ShowCommand:
